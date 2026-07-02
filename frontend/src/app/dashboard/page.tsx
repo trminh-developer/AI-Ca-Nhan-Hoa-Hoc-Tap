@@ -8,7 +8,7 @@ import { getEloTier, getBloomLabel } from '@/lib/utils';
 import styles from './dashboard.module.css';
 
 interface UserData {
-  id: number; username: string; email: string; overall_elo: number;
+  id: number; username: string; email: string; overall_elo: number; is_admin: boolean;
 }
 interface Subject {
   id: number; name: string; icon_emoji: string; description: string;
