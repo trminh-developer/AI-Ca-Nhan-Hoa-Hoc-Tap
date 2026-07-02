@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { getMe, updateMe } from '@/lib/api';
@@ -30,11 +30,7 @@ export default function ProfilePage() {
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
 
-  useEffect(() => {
-    loadUser();
-  }, []);
-
-  const loadUser = async () => {
+  const loadUser = useCallback(async () => {
     try {
       const data = await getMe();
       setUser(data);
@@ -44,7 +40,11 @@ export default function ProfilePage() {
     } finally {
       setLoading(false);
     }
-  };
+  }, [router]);
+
+  useEffect(() => {
+    void loadUser();
+  }, [loadUser]);
 
   const handleSave = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -75,8 +75,12 @@ export default function ProfilePage() {
         setConfirmPassword('');
       }
       setIsEditing(false);
-    } catch (err: any) {
-      setError(err.message || 'Cập nhật thất bại');
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        setError(error.message || 'Cập nhật thất bại');
+      } else {
+        setError('Cập nhật thất bại');
+      }
     } finally {
       setSaving(false);
     }

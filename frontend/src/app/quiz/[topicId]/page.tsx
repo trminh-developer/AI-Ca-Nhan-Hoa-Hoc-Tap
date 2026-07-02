@@ -26,15 +26,16 @@ export default function QuizPage({ params }: { params: Promise<{ topicId: string
   const [results, setResults] = useState<QuizResult[]>([]);
   const [loading, setLoading] = useState(true);
   const [submitting, setSubmitting] = useState(false);
-  const [startTime, setStartTime] = useState(Date.now());
+  const [startTime, setStartTime] = useState(0);
   const [finished, setFinished] = useState(false);
 
   useEffect(() => {
+    setStartTime(Date.now());
     const token = localStorage.getItem('token');
     if (!token) { router.push('/login'); return; }
 
-    startQuiz(parseInt(topicId), 10)
-      .then((qs) => { setQuestions(qs); setStartTime(Date.now()); })
+    startQuiz(parseInt(topicId as string))
+      .then(q => setQuestions(q))
       .catch(() => router.push('/dashboard'))
       .finally(() => setLoading(false));
   }, [topicId, router]);

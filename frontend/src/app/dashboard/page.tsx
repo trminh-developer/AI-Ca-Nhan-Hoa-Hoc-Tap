@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
-import { getMe, getSubjects, getProgress, getMastery } from '@/lib/api';
+import { getMe, getSubjects, getProgress } from '@/lib/api';
 import { getEloTier, getBloomLabel } from '@/lib/utils';
 import styles from './dashboard.module.css';
 

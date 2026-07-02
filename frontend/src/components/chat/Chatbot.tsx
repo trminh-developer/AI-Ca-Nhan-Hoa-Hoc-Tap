@@ -43,7 +43,7 @@ export default function Chatbot() {
       // Call backend
       const res = await sendMessageToBot(userText);
       setMessages(prev => [...prev, { id: (Date.now() + 1).toString(), text: res.reply, sender: 'bot' }]);
-    } catch (error) {
+    } catch {
       setMessages(prev => [...prev, { 
         id: (Date.now() + 1).toString(), 
         text: 'Xin lỗi, hệ thống đang bận hoặc bạn chưa đăng nhập. Vui lòng thử lại sau!', 

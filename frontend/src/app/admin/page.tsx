@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { useRouter } from 'next/navigation';
 import { getAdminStats, getAllUsers, updateUserRole } from '@/lib/api';
 import styles from './admin.module.css';
@@ -27,11 +27,7 @@ export default function AdminDashboard() {
   const [users, setUsers] = useState<User[]>([]);
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    loadData();
-  }, []);
-
-  const loadData = async () => {
+  const loadData = useCallback(async () => {
     try {
       const [statsData, usersData] = await Promise.all([
         getAdminStats(),
@@ -45,14 +41,22 @@ export default function AdminDashboard() {
     } finally {
       setLoading(false);
     }
-  };
+  }, [router]);
+
+  useEffect(() => {
+    void loadData();
+  }, [loadData]);
 
   const toggleRole = async (userId: number, currentRole: boolean) => {
     try {
       await updateUserRole(userId, !currentRole);
       setUsers(users.map(u => u.id === userId ? { ...u, is_admin: !currentRole } : u));
-    } catch (error: any) {
-      alert(error.message || 'Lỗi khi cập nhật quyền');
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        alert(error.message || 'Lỗi khi cập nhật quyền');
+      } else {
+        alert('Lỗi khi cập nhật quyền');
+      }
     }
   };
 
