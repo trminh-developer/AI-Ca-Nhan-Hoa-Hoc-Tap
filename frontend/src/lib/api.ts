@@ -8,9 +8,11 @@ async function apiRequest<T>(endpoint: string, options: {
   method?: string;
   body?: unknown;
   contentType?: string;
+  customToken?: string | null;
 } = {}): Promise<T> {
-  const { method = 'GET', body, contentType = 'application/json' } = options;
-  const token = typeof window !== 'undefined' ? localStorage.getItem('token') : null;
+  const { method = 'GET', body, contentType = 'application/json', customToken } = options;
+  const defaultToken = typeof window !== 'undefined' ? localStorage.getItem('token') : null;
+  const token = customToken !== undefined ? customToken : defaultToken;
 
   const headers: Record<string, string> = {};
   if (contentType) headers['Content-Type'] = contentType;
@@ -61,10 +63,10 @@ export async function login(username: string, password: string) {
   return response.json() as Promise<{ access_token: string; token_type: string }>;
 }
 
-export async function getMe() {
+export async function getMe(token?: string) {
   return apiRequest<{
     id: number; username: string; email: string; overall_elo: number; is_admin: boolean; created_at: string;
-  }>('/auth/me');
+  }>('/auth/me', { customToken: token });
 }
 
 export async function updateMe(data: { email?: string; password?: string }) {
@@ -156,23 +158,24 @@ export async function sendMessageToBot(message: string) {
 
 /* ══════════════ ADMIN ══════════════ */
 
-export async function getAdminStats() {
+export async function getAdminStats(token?: string) {
   return apiRequest<{
     total_users: number; total_subjects: number; total_topics: number; total_questions: number;
-  }>('/admin/stats');
+  }>('/admin/stats', { customToken: token });
 }
 
-export async function getAllUsers() {
+export async function getAllUsers(token?: string) {
   return apiRequest<Array<{
     id: number; username: string; email: string; overall_elo: number; is_admin: boolean; created_at: string;
-  }>>('/admin/users');
+  }>>('/admin/users', { customToken: token });
 }
 
-export async function updateUserRole(userId: number, isAdmin: boolean) {
+export async function updateUserRole(userId: number, isAdmin: boolean, token?: string) {
   return apiRequest<{
     id: number; username: string; email: string; overall_elo: number; is_admin: boolean; created_at: string;
   }>(`/admin/users/${userId}/role`, {
     method: 'PUT',
     body: { is_admin: isAdmin },
+    customToken: token
   });
 }

@@ -114,6 +114,7 @@ class Question(Base):
 
     id = Column(Integer, primary_key=True, index=True, autoincrement=True)
     topic_id = Column(Integer, ForeignKey("topics.id"), nullable=False)
+    created_by_id = Column(Integer, ForeignKey("users.id"), nullable=True) # ID của người tạo (admin hoặc teacher)
     question_text = Column(Text, nullable=False)
     option_a = Column(Text, nullable=False)
     option_b = Column(Text, nullable=False)

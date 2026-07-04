@@ -4,7 +4,8 @@ Model Người dùng (User) - Lưu trữ thông tin tài khoản và Elo tổng 
 
 from datetime import datetime, timezone
 
-from sqlalchemy import Column, Integer, String, Float, DateTime, Boolean
+from sqlalchemy import Column, Integer, String, Float, DateTime, Boolean, ForeignKey
+from sqlalchemy.orm import relationship
 
 from database import Base
 
@@ -28,7 +29,11 @@ class User(Base):
     email = Column(String(100), unique=True, nullable=False, index=True)
     hashed_password = Column(String(255), nullable=False)
     overall_elo = Column(Float, default=1500.0, nullable=False)
-    is_admin = Column(Boolean, default=False, nullable=False)
+    role = Column(String(20), default="student", nullable=False)  # admin, teacher, student
+    teacher_id = Column(Integer, ForeignKey("users.id"), nullable=True)
+    
+    # Quan hệ: Một giảng viên quản lý nhiều học viên
+    students = relationship("User", backref="teacher", remote_side=[id])
     created_at = Column(
         DateTime,
         default=lambda: datetime.now(timezone.utc),

@@ -8,10 +8,13 @@ Bao gồm:
 - Root endpoint trả về thông tin API
 """
 
+import sys
 from contextlib import asynccontextmanager
 
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+
+sys.stdout.reconfigure(encoding='utf-8')
 
 from config import ALLOWED_ORIGINS
 from database import create_tables, SessionLocal
@@ -81,6 +84,7 @@ app = FastAPI(
 app.add_middleware(
     CORSMiddleware,
     allow_origins=ALLOWED_ORIGINS,
+    allow_origin_regex=r"https://.*\.vercel\.app",
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],

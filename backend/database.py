@@ -2,7 +2,10 @@
 Thiết lập kết nối cơ sở dữ liệu SQLAlchemy với SQL Server qua pymssql.
 """
 
-import pymssql
+try:
+    import pymssql
+except ImportError:
+    pass
 from sqlalchemy import create_engine, text
 from sqlalchemy.orm import sessionmaker, DeclarativeBase
 
@@ -15,12 +18,12 @@ def create_database_if_not_exists():
 
 
 # Tạo engine
-connect_args = {"check_same_thread": False} if "sqlite" in DATABASE_URL else {}
-engine = create_engine(
-    DATABASE_URL,
-    connect_args=connect_args,
-    echo=False,  # Đặt True để debug SQL queries
-)
+if DATABASE_URL.startswith("sqlite"):
+    engine = create_engine(
+        DATABASE_URL, connect_args={"check_same_thread": False}, echo=False
+    )
+else:
+    engine = create_engine(DATABASE_URL, echo=False)
 
 # Tạo session factory
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)

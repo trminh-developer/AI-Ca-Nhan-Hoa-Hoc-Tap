@@ -15,11 +15,12 @@ DB_NAME = os.getenv("DB_NAME", "AdaptiveLearningDB")
 DB_USER = os.getenv("DB_USER", "")
 DB_PASSWORD = os.getenv("DB_PASSWORD", "")
 
-# TẠM THỜI CHUYỂN SANG SQLITE ĐỂ CHẠY ĐƯỢC LUÔN (Fix all)
-# Vì pymssql bắt buộc cần TCP/IP nhưng SQL Server của bạn đang tắt.
-import os
-base_dir = os.path.dirname(os.path.abspath(__file__))
-DATABASE_URL = f"sqlite:///{os.path.join(base_dir, 'adaptive_learning.db')}"
+# Database Connection
+DATABASE_URL = os.getenv("DATABASE_URL")
+if not DATABASE_URL:
+    # Fallback if .env is missing
+    base_dir = os.path.dirname(os.path.abspath(__file__))
+    DATABASE_URL = f"sqlite:///{os.path.join(base_dir, 'adaptive_learning.db')}"
 
 # Cấu hình JWT Authentication
 SECRET_KEY = os.getenv(
@@ -42,4 +43,6 @@ ALLOWED_ORIGINS = [
     "http://127.0.0.1:3000",
     "http://localhost:5173",
     "http://127.0.0.1:5173",
+    "https://trminh-learningai.vercel.app",
+    "https://learningai-f6l8eae4m-trminh-developers-projects.vercel.app",
 ]

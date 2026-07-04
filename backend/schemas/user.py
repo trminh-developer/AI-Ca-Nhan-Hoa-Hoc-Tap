@@ -32,8 +32,13 @@ class UserResponse(BaseModel):
     username: str
     email: str
     overall_elo: float
-    is_admin: bool
+    role: str
+    teacher_id: int | None = None
     created_at: datetime
+    
+    @property
+    def is_admin(self) -> bool:
+        return self.role == 'admin'
 
     model_config = {"from_attributes": True}
 
