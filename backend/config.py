@@ -17,6 +17,9 @@ DB_PASSWORD = os.getenv("DB_PASSWORD", "")
 
 # Database Connection
 DATABASE_URL = os.getenv("DATABASE_URL")
+if DATABASE_URL and DATABASE_URL.startswith("postgres://"):
+    DATABASE_URL = DATABASE_URL.replace("postgres://", "postgresql://", 1)
+
 if not DATABASE_URL:
     # Fallback if .env is missing
     base_dir = os.path.dirname(os.path.abspath(__file__))
