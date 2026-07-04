@@ -21,12 +21,25 @@ def seed_all(db):
             username="admin",
             email="admin@learnai.com",
             hashed_password=hash_password("admin123"),
-            is_admin=True,
+            role="admin",
             overall_elo=1500
         )
         db.add(admin_user)
         db.flush()
         print("   ✅ Đã tạo tài khoản admin (admin / admin123)")
+        
+    teacher_user = db.query(User).filter(User.username == "teacher").first()
+    if not teacher_user:
+        teacher_user = User(
+            username="teacher",
+            email="teacher@learnai.com",
+            hashed_password=hash_password("teacher123"),
+            role="teacher",
+            overall_elo=1500
+        )
+        db.add(teacher_user)
+        db.flush()
+        print("   ✅ Đã tạo tài khoản teacher (teacher / teacher123)")
 
     # ========== MÔN 1: LẬP TRÌNH PYTHON ==========
     python_subject = Subject(

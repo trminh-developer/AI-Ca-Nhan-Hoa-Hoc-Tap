@@ -82,6 +82,7 @@ class QuestionResponse(BaseModel):
     explanation: Optional[str]
     difficulty_elo: float
     bloom_level: int
+    created_by_id: int | None = None
 
     model_config = {"from_attributes": True}
 

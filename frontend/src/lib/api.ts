@@ -65,13 +65,13 @@ export async function login(username: string, password: string) {
 
 export async function getMe(token?: string) {
   return apiRequest<{
-    id: number; username: string; email: string; overall_elo: number; is_admin: boolean; created_at: string;
+    id: number; username: string; email: string; overall_elo: number; role: string; teacher_id: number | null; created_at: string;
   }>('/auth/me', { customToken: token });
 }
 
 export async function updateMe(data: { email?: string; password?: string }) {
   return apiRequest<{
-    id: number; username: string; email: string; overall_elo: number; is_admin: boolean; created_at: string;
+    id: number; username: string; email: string; overall_elo: number; role: string; teacher_id: number | null; created_at: string;
   }>('/auth/me', {
     method: 'PUT',
     body: data,
@@ -166,16 +166,74 @@ export async function getAdminStats(token?: string) {
 
 export async function getAllUsers(token?: string) {
   return apiRequest<Array<{
-    id: number; username: string; email: string; overall_elo: number; is_admin: boolean; created_at: string;
+    id: number; username: string; email: string; overall_elo: number; role: string; teacher_id: number | null; created_at: string;
   }>>('/admin/users', { customToken: token });
 }
 
-export async function updateUserRole(userId: number, isAdmin: boolean, token?: string) {
+export async function updateUserRole(userId: number, role: string, token?: string) {
   return apiRequest<{
-    id: number; username: string; email: string; overall_elo: number; is_admin: boolean; created_at: string;
+    id: number; username: string; email: string; overall_elo: number; role: string; teacher_id: number | null; created_at: string;
   }>(`/admin/users/${userId}/role`, {
     method: 'PUT',
-    body: { is_admin: isAdmin },
+    body: { role },
+    customToken: token
+  });
+}
+
+export async function assignTeacher(userId: number, teacherId: number | null, token?: string) {
+  return apiRequest<{
+    id: number; username: string; email: string; overall_elo: number; role: string; teacher_id: number | null; created_at: string;
+  }>(`/admin/users/${userId}/teacher`, {
+    method: 'PUT',
+    body: { teacher_id: teacherId },
+    customToken: token
+  });
+}
+
+export async function deleteAdminUser(userId: number, token?: string) {
+  return apiRequest<{ message: string }>(`/admin/users/${userId}`, {
+    method: 'DELETE',
+    customToken: token
+  });
+}
+
+export interface QuestionData {
+  id?: number;
+  topic_id: number;
+  question_text: string;
+  option_a: string;
+  option_b: string;
+  option_c: string;
+  option_d: string;
+  correct_answer: string;
+  explanation?: string;
+  difficulty_elo: number;
+  bloom_level: number;
+}
+
+export async function getAdminQuestions(token?: string) {
+  return apiRequest<Array<QuestionData & { id: number, created_by_id: number | null }>>('/admin/questions', { customToken: token });
+}
+
+export async function createAdminQuestion(data: QuestionData, token?: string) {
+  return apiRequest<QuestionData & { id: number, created_by_id: number | null }>('/admin/questions', {
+    method: 'POST',
+    body: data,
+    customToken: token
+  });
+}
+
+export async function updateAdminQuestion(id: number, data: QuestionData, token?: string) {
+  return apiRequest<QuestionData & { id: number, created_by_id: number | null }>(`/admin/questions/${id}`, {
+    method: 'PUT',
+    body: data,
+    customToken: token
+  });
+}
+
+export async function deleteAdminQuestion(id: number, token?: string) {
+  return apiRequest<{ message: string }>(`/admin/questions/${id}`, {
+    method: 'DELETE',
     customToken: token
   });
 }

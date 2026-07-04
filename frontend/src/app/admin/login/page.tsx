@@ -25,8 +25,8 @@ export default function AdminLogin() {
       // 2. Lấy thông tin user để kiểm tra quyền admin
       const user = await getMe(token);
       
-      if (!user.is_admin) {
-        setError('Tài khoản này không có quyền Admin!');
+      if (user.role !== 'admin' && user.role !== 'teacher') {
+        setError('Tài khoản này không có quyền Quản trị hoặc Giảng viên!');
         setIsLoading(false);
         return;
       }

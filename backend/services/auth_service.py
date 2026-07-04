@@ -129,9 +129,20 @@ def get_current_admin_user(current_user: User = Depends(get_current_user)) -> Us
     """
     FastAPI Dependency - Đảm bảo user hiện tại là Admin.
     """
-    if not current_user.is_admin:
+    if current_user.role != 'admin':
         raise HTTPException(
             status_code=status.HTTP_403_FORBIDDEN,
             detail="Bạn không có quyền truy cập chức năng này (yêu cầu quyền Admin)",
+        )
+    return current_user
+
+def get_current_teacher_or_admin_user(current_user: User = Depends(get_current_user)) -> User:
+    """
+    FastAPI Dependency - Đảm bảo user hiện tại là Admin hoặc Giảng viên.
+    """
+    if current_user.role not in ['admin', 'teacher']:
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail="Bạn không có quyền truy cập chức năng này (yêu cầu quyền Admin hoặc Giảng viên)",
         )
     return current_user
