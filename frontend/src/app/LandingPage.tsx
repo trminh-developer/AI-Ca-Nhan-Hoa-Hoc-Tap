@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 import { useState, useEffect, useRef } from "react";
 import { motion, useInView } from "motion/react";
 import {
@@ -446,7 +446,7 @@ function Stats() {
                 <YAxis domain={[800, 1100]} tick={{ fill: "#7878a0", fontSize: 11 }} axisLine={false} tickLine={false} />
                 <Tooltip
                   contentStyle={{ background: "#0f0f20", border: "1px solid rgba(34,211,238,0.2)", borderRadius: 10, color: "#e0e0f0", fontSize: 12 }}
-                  formatter={(v: string | number) => [`${v} Elo`, "Rating"]}
+                  formatter={(v: any) => [`${v} Elo`, "Rating"]}
                 />
                 <Area type="monotone" dataKey="elo" stroke="#22d3ee" strokeWidth={2} fill="url(#eloGrad)" dot={{ fill: "#22d3ee", r: 3, strokeWidth: 0 }} activeDot={{ r: 5, fill: "#22d3ee" }} />
               </AreaChart>
