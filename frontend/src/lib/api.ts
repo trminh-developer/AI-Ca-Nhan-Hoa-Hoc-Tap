@@ -156,6 +156,17 @@ export async function sendMessageToBot(message: string) {
   });
 }
 
+export interface ChatHistoryItem {
+  id: number;
+  role: string;
+  message: string;
+  created_at: string;
+}
+
+export async function getChatHistory() {
+  return apiRequest<ChatHistoryItem[]>('/chat/history');
+}
+
 /* ══════════════ ADMIN ══════════════ */
 
 export async function getAdminStats(token?: string) {

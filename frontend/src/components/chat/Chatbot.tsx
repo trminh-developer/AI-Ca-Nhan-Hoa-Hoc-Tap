@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useRef, useEffect } from 'react';
-import { sendMessageToBot } from '@/lib/api';
+import { sendMessageToBot, getChatHistory } from '@/lib/api';
 import styles from './chatbot.module.css';
 
 interface Message {
@@ -17,8 +17,35 @@ export default function Chatbot() {
   ]);
   const [input, setInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  const [hasLoadedHistory, setHasLoadedHistory] = useState(false);
   
   const messagesEndRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    async function loadHistory() {
+      try {
+        const history = await getChatHistory();
+        if (history && history.length > 0) {
+          const formatted = history.map(h => ({
+            id: h.id.toString(),
+            text: h.message,
+            sender: h.role === 'user' ? 'user' : 'bot' as 'user' | 'bot'
+          }));
+          setMessages(prev => {
+            // Keep the welcome message if history is empty, otherwise replace
+            return formatted.length > 0 ? formatted : prev;
+          });
+        }
+      } catch (e) {
+        console.error("Failed to load chat history", e);
+      }
+    }
+
+    if (isOpen && !hasLoadedHistory) {
+      loadHistory();
+      setHasLoadedHistory(true);
+    }
+  }, [isOpen, hasLoadedHistory]);
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
