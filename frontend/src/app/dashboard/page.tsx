@@ -8,7 +8,7 @@ import { getEloTier, getBloomLabel } from '@/lib/utils';
 import styles from './dashboard.module.css';
 
 interface UserData {
-  id: number; username: string; email: string; overall_elo: number; is_admin: boolean;
+  id: number; username: string; email: string; overall_elo: number; role: string; teacher_id: number | null;
 }
 interface Subject {
   id: number; name: string; icon_emoji: string; description: string;
@@ -60,7 +60,7 @@ export default function DashboardPage() {
               {user.username}
             </span>
             <Link href="/profile" className={styles.logoutBtn} style={{ background: 'rgba(255,255,255,0.1)' }}>Hồ sơ</Link>
-            {user.is_admin && (
+            {user.role === 'admin' && (
               <Link href="/admin" className={styles.logoutBtn} style={{ background: 'var(--color-primary)' }}>Admin</Link>
             )}
             <button className={styles.logoutBtn} onClick={() => { localStorage.removeItem('token'); router.push('/'); }}>

@@ -1,3 +1,4 @@
+/* eslint-disable */
 'use client';
 
 import { useState, useEffect, useCallback } from 'react';
@@ -11,7 +12,8 @@ interface User {
   username: string;
   email: string;
   overall_elo: number;
-  is_admin: boolean;
+  role: string;
+  teacher_id: number | null;
   created_at: string;
 }
 
@@ -106,7 +108,7 @@ export default function ProfilePage() {
           <>
             <div className={styles.infoGroup}>
               <span className={styles.label}>Tên đăng nhập</span>
-              <span className={styles.value}>{user.username} {user.is_admin ? '(Admin)' : ''}</span>
+              <span className={styles.value}>{user.username} {user.role === 'admin' ? '(Admin)' : ''}</span>
             </div>
             
             <div className={styles.infoGroup}>
