@@ -1,5 +1,7 @@
 @import './variables.css';
 
+@layer old_ui {
+
 /* ══════════════════════════════════════════
    RESET & BASE
    ══════════════════════════════════════════ */
@@ -586,4 +588,6 @@ input, textarea, select {
   background-size: 200% 100%;
   animation: shimmer 1.5s infinite;
   border-radius: var(--radius-md);
+}
+
 }
