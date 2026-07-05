@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import { Inter, Bricolage_Grotesque, JetBrains_Mono } from "next/font/google";
-import "@/styles/globals.css";
 import "@/app/globals.css";
 import Chatbot from "@/components/chat/Chatbot";
 
