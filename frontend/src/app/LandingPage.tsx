@@ -221,7 +221,7 @@ function Hero() {
           className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-cyan-500/28 bg-cyan-500/7 text-cyan-300 text-xs font-semibold mb-8 backdrop-blur-md"
         >
           <Sparkles className="w-3.5 h-3.5 animate-pulse" />
-          Nghiíªn cứu Khoa học Sinh viên Â· 2024
+          Nghiên cứu Khoa học Sinh viên � 2024
           <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse ml-1" />
         </motion.div>
 
@@ -248,7 +248,7 @@ function Hero() {
           transition={{ duration: 0.7, delay: 0.22 }}
           className="text-[#8080a8] text-lg md:text-xl max-w-2xl mx-auto leading-relaxed mb-10"
         >
-          Hệ thống học tập thế hệ mới â€” cá nhân hóa từng câu hỏi, từng lịch ôn, từng gợi ý. Được xí¢y dựng dựa tríªn khoa học nhận thức ví  trí­ tuệ nhí¢n tạo.
+          Hệ thống học tập thế hệ mới — cá nhân hóa từng câu hỏi, từng lịch ôn, từng gợi ý. Được xây dựng dựa trên khoa học nhận thức và trí tuệ nhân tạo.
         </motion.p>
 
         {/* CTA */}
@@ -389,7 +389,7 @@ function Stats() {
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
           {[
             { val: s, suffix: "+", label: "Môn học", sub: "& mở rộng", color: "text-cyan-400", glow: "rgba(34,211,238,0.08)" },
-            { val: q, suffix: "+", label: "Cí¢u hỏi", sub: "đa cấp độ", color: "text-violet-400", glow: "rgba(124,58,237,0.08)" },
+            { val: q, suffix: "+", label: "Câu hỏi", sub: "đa cấp độ", color: "text-violet-400", glow: "rgba(124,58,237,0.08)" },
             { val: b, suffix: "", label: "Cấp Bloom", sub: "taxonomy", color: "text-emerald-400", glow: "rgba(16,185,129,0.08)" },
             { val: p, suffix: "+", label: "Sinh viên", sub: "đang học", color: "text-orange-400", glow: "rgba(249,115,22,0.08)" },
           ].map(({ val, suffix, label, sub, color, glow }, i) => (
@@ -494,11 +494,11 @@ function Features() {
       label: "Elo Rating",
       title: "Elo Rating Thích Ứng",
       tagline: "Luôn trong vùng thách thức tối ưu",
-      desc: "Hệ thống Elo Rating liíªn tục hiệu chỉnh độ khí³ câu hỏi dựa tríªn mỗi câu trả lời của bạn. Mục tiêu duy trì trong vùng 70â€“85% tỷ lệ đúng â€” đí¢y lí  ví¹ng học tập hiệu quả nhấpt theo nghiên cứu khoa học nhận thức.",
+      desc: "Hệ thống Elo Rating liên tục hiệu chỉnh độ khó câu hỏi dựa trên mỗi câu trả lời của bạn. Mục tiêu duy trì trong vùng 70–85% tỷ lệ đúng — đây là vùng học tập hiệu quả nhất theo nghiên cứu khoa học nhận thức.",
       bullets: [
         "Hiệu chỉnh real-time sau mỗi câu trả lời",
-        "So sí¡nh với chuẩn học tập toí n hệ thống",
-        "Phí¢n tí­ch xu hướng tiến bộ theo tuần",
+        "So sánh với chuẩn học tập toàn hệ thống",
+        "Phân tích xu hướng tiến bộ theo tuần",
         "Cảnh báo khi rơi vào vùng thoải mái",
       ],
       color: "from-cyan-500/12 to-blue-600/12",
@@ -514,12 +514,12 @@ function Features() {
       icon: Clock,
       label: "SM-2",
       title: "Spaced Repetition SM-2",
-      tagline: "Chiến thắng đường cong quíªn lí£ng",
-      desc: "Thuật toán SuperMemo SM-2 tí­nh toí¡n thời điểm tối ưu để ôn lại kiến thức, dựa tríªn đường cong quíªn lí£ng Ebbinghaus cí¡ nhí¢n của bạn. Học í­t hơn, nhớ lí¢u hơn.",
+      tagline: "Chiến thắng đường cong quên lãng",
+      desc: "Thuật toán SuperMemo SM-2 tính toán thời điểm tối ưu để ôn lại kiến thức, dựa trên đường cong quên lãng Ebbinghaus cá nhân của bạn. Học ít hơn, nhớ lâu hơn.",
       bullets: [
         "Lịch ôn cá nhân hóa tự động",
         "6 hệ số dễ theo từng nội dung",
-        "Tí­ch hợp với Elo để ưu tiíªn điểm yếu",
+        "Tích hợp với Elo để ưu tiên điểm yếu",
         "Thống kê retention rate từng tuần",
       ],
       color: "from-violet-500/12 to-purple-600/12",
@@ -535,13 +535,13 @@ function Features() {
       icon: BarChart3,
       label: "Dashboard",
       title: "Analytics Dashboard",
-      tagline: "Dữ liệu học tập toí n diện",
-      desc: "Bảng điều khiển thời gian thực hiển thị đầy đủ hành trình học tập: xếp hạng Elo, bản đồ thành thạo chủ đề, streak ngí y học, ví  phí¢n tí­ch session chi tiết.",
+      tagline: "Dữ liệu học tập toàn diện",
+      desc: "Bảng điều khiển thời gian thực hiển thị đầy đủ hành trình học tập: xếp hạng Elo, bản đồ thành thạo chủ đề, streak ngày học, và phân tích session chi tiết.",
       bullets: [
         "Biểu đồ Elo theo thời gian thực",
         "Bản đồ nhiệt thành thạo chủ đề",
-        "Streak ví  milestone gamification",
-        "Export báo cáo PDF cí¡ nhí¢n",
+        "Streak và milestone gamification",
+        "Export báo cáo PDF cá nhân",
       ],
       color: "from-emerald-500/12 to-teal-600/12",
       border: "border-emerald-500/22",
@@ -555,13 +555,13 @@ function Features() {
     {
       icon: MessageSquare,
       label: "AI Tutor",
-      title: "AI Tutor Cí¡ Nhí¢n",
+      title: "AI Tutor Cá Nhân",
       tagline: "Trợ lý thông minh 24/7",
-      desc: "Chatbot AI được đào tạo tríªn tài liệu khí³a học, có thể giải thí­ch khí¡i niệm, gợi ý lộ trình học, ví  cung cấpp hints phí¹ hợp đúng với trình độ Elo hiện tại của bạn.",
+      desc: "Chatbot AI được đào tạo trên tài liệu khóa học, có thể giải thích khái niệm, gợi ý lộ trình học, và cung cấp hints phù hợp đúng với trình độ Elo hiện tại của bạn.",
       bullets: [
-        "Trả lời dựa tríªn tài liệu khí³a học",
-        "Hints thí­ch ứng theo cấp Bloom",
-        "Giải thí­ch nhiều cí¡ch cho một khí¡i niệm",
+        "Trả lời dựa trên tài liệu khóa học",
+        "Hints thích ứng theo cấp Bloom",
+        "Giải thích nhiều cách cho một khái niệm",
         "Lịch sử hội thoại lưu trữ đầy đủ",
       ],
       color: "from-orange-500/12 to-rose-600/12",
@@ -598,7 +598,7 @@ function Features() {
               </span>
             </h2>
             <p className="text-[#7878a0] text-sm max-w-xs leading-relaxed">
-              Bốn trụ cột được xí¢y dựng tríªn nền tảng nghiên cứu nhận thức học ví  khoa học dữ liệu.
+              Bốn trụ cột được xây dựng trên nền tảng nghiên cứu nhận thức học và khoa học dữ liệu.
             </p>
           </div>
         </motion.div>
@@ -684,9 +684,9 @@ function Features() {
 const radarData = [
   { subject: "Cơ bản", A: 90, B: 60, C: 75 },
   { subject: "Ứng dụng", A: 78, B: 85, C: 55 },
-  { subject: "Phí¢n tí­ch", A: 65, B: 72, C: 88 },
+  { subject: "Phân tích", A: 65, B: 72, C: 88 },
   { subject: "Tổng hợp", A: 70, B: 58, C: 80 },
-  { subject: "Đí¡nh gií¡", A: 55, B: 90, C: 65 },
+  { subject: "Đánh giá", A: 55, B: 90, C: 65 },
 ];
 
 function Subjects() {
@@ -695,7 +695,7 @@ function Subjects() {
       icon: Code2,
       name: "Lập Trình",
       code: "CS101",
-      desc: "Thuật toán, cấu trúc dữ liệu, lập trình hướng đối tượng ví  giải quyết vấpn đề thực tế.",
+      desc: "Thuật toán, cấu trúc dữ liệu, lập trình hướng đối tượng và giải quyết vấn đề thực tế.",
       topics: ["Thuật toán", "OOP", "Data Structures", "Complexity"],
       elo: 950,
       maxElo: 1200,
@@ -710,7 +710,7 @@ function Subjects() {
       icon: Calculator,
       name: "Toán Cao Cấp",
       code: "MATH201",
-      desc: "Giải tích, đại số tuyến tính, xí¡c suấpt thống kíª ví  ứng dụng trong khoa học máy tính.",
+      desc: "Giải tích, đại số tuyến tính, xác suấpt thống kê và ứng dụng trong khoa học máy tính.",
       topics: ["Giải tích", "Ma trận", "Xác suất", "Thống kê"],
       elo: 1080,
       maxElo: 1200,
@@ -725,7 +725,7 @@ function Subjects() {
       icon: AtomIcon,
       name: "Vật Lý Đại Cương",
       code: "PHY101",
-      desc: "Cơ học cổ điển, điện từ học, quang học ví  nhiệt động lực học với bài toán thực tế.",
+      desc: "Cơ học cổ điển, điện từ học, quang học và nhiệt động lực học với bài toán thực tế.",
       topics: ["Cơ học", "Điện từ", "Quang học", "Nhiệt học"],
       elo: 820,
       maxElo: 1200,
@@ -759,7 +759,7 @@ function Subjects() {
             </h2>
           </div>
           <p className="text-[#7878a0] text-sm max-w-xs leading-relaxed">
-            Mỗi môn học được chia thành cí¡c chủ đề nhỏ với độ khí³ riíªng biệt, đảm bảo học tập toí n diện.
+            Mỗi môn học được chia thành các chủ đề nhỏ với độ khó riêng biệt, đảm bảo học tập toàn diện.
           </p>
         </motion.div>
 
@@ -814,7 +814,7 @@ function Subjects() {
           ))}
         </div>
 
-        {/* Radar chart: thành thạo so sí¡nh */}
+        {/* Radar chart: thành thạo so sánh */}
         <motion.div
           initial={{ opacity: 0, y: 24 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -827,7 +827,7 @@ function Subjects() {
                 Thành thạo theo cấp Bloom
               </h3>
               <p className="text-[#7878a0] text-sm leading-relaxed mb-5">
-                So sí¡nh mức độ thành thạo của ba môn học tríªn thang đo 6 cấpp độ nhận thức.
+                So sánh mức độ thành thạo của ba môn học trên thang đo 6 cấp độ nhận thức.
               </p>
               <div className="space-y-2">
                 {[
@@ -848,7 +848,7 @@ function Subjects() {
                   <PolarGrid stroke="rgba(255,255,255,0.06)" />
                   <PolarAngleAxis dataKey="subject" tick={{ fill: "#7878a0", fontSize: 11 }} />
                   <Radar name="Lập Trình" dataKey="A" stroke="#22d3ee" fill="#22d3ee" fillOpacity={0.12} strokeWidth={1.5} />
-                  <Radar name="Toí¡n" dataKey="B" stroke="#7c3aed" fill="#7c3aed" fillOpacity={0.12} strokeWidth={1.5} />
+                  <Radar name="Toán" dataKey="B" stroke="#7c3aed" fill="#7c3aed" fillOpacity={0.12} strokeWidth={1.5} />
                   <Radar name="Vật Lý" dataKey="C" stroke="#10b981" fill="#10b981" fillOpacity={0.12} strokeWidth={1.5} />
                 </RadarChart>
               </ResponsiveContainer>
@@ -867,26 +867,26 @@ function HowItWorks() {
   const steps = [
     {
       num: "01", icon: Brain, color: "text-cyan-400", bg: "bg-cyan-400/10", border: "border-cyan-400/20",
-      title: "Đí¡nh gií¡ năng lực ban đầu",
-      desc: "Hoí n thành bí i kiểm tra đầu ví o thí­ch ứng gồm 20 câu hỏi. Hệ thống Elo phí¢n tí­ch pattern ví  xí¡c định trình độ xuấpt phí¡t chí­nh xí¡c cho từng chủ đề.",
-      detail: "~10 phíºt",
+      title: "Đánh giá năng lực ban đầu",
+      desc: "Hoàn thành bài kiểm tra đầu vào thích ứng gồm 20 câu hỏi. Hệ thống Elo phân tích pattern và xác định trình độ xuất phát chính xác cho từng chủ đề.",
+      detail: "~10 phút",
     },
     {
       num: "02", icon: Cpu, color: "text-violet-400", bg: "bg-violet-400/10", border: "border-violet-400/20",
-      title: "AI xí¢y dựng bản đồ tri thức",
-      desc: "Thuật toán phí¢n tí­ch điểm mạnh, điểm yếu, ví  xí¢y dựng đồ thị tri thức cí¡ nhí¢n. Mỗi concept được gắn Elo riíªng ví  lịch ôn SM-2.",
+      title: "AI xây dựng bản đồ tri thức",
+      desc: "Thuật toán phân tích điểm mạnh, điểm yếu, và xây dựng đồ thị tri thức cá nhân. Mỗi concept được gắn Elo riêng và lịch ôn SM-2.",
       detail: "Tự động",
     },
     {
       num: "03", icon: Target, color: "text-emerald-400", bg: "bg-emerald-400/10", border: "border-emerald-400/20",
-      title: "Học theo lộ trình cí¡ nhí¢n",
-      desc: "Nhận câu hỏi ví  tài liệu được điều chỉnh liíªn tục. AI tutor đồng hành giải đáp thắc mắc. Elo cập nhật sau mỗi câu trả lời.",
-      detail: "Liíªn tục",
+      title: "Học theo lộ trình cá nhân",
+      desc: "Nhận câu hỏi và tài liệu được điều chỉnh liên tục. AI tutor đồng hành giải đáp thắc mắc. Elo cập nhật sau mỗi câu trả lời.",
+      detail: "Liên tục",
     },
     {
       num: "04", icon: TrendingUp, color: "text-orange-400", bg: "bg-orange-400/10", border: "border-orange-400/20",
-      title: "Theo díµi ví  tối ưu tiến bộ",
-      desc: "Dashboard thời gian thực hiển thị tiến bộ, điểm thành thạo, ví  so sí¡nh với cộng đồng. Hệ thống tự điều chỉnh thuật toí¡n khi phí¡t hiện plateau.",
+      title: "Theo dõi và tối ưu tiến bộ",
+      desc: "Dashboard thời gian thực hiển thị tiến bộ, điểm thành thạo, và so sánh với cộng đồng. Hệ thống tự điều chỉnh thuật toán khi phát hiện plateau.",
       detail: "Real-time",
     },
   ];
@@ -954,21 +954,21 @@ function HowItWorks() {
 â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 function AIDemo() {
   const [messages, setMessages] = useState([
-    { role: "ai" as const, text: "Xin chí o! Tí´i lí  AI Tutor của LearnAI. Hôm nay bạn muốn ôn tập chủ đề ní o? Elo hiện tại của bạn lí  950." },
-    { role: "user" as const, text: "Giải thí­ch cho tôi về Big O notation?" },
-    { role: "ai" as const, text: "Big O notation mí´ tả tốc độ tăng trưởng của thuật toí¡n khi input tăng. Ví­ dụ: O(n) nghĩa lí  thời gian chạy tăng tuyến tính. Dựa tríªn Elo của bạn, tôi gợi ý bắt đầu với O(1), O(n), O(nÂ²) trước khi sang O(log n)." },
+    { role: "ai" as const, text: "Xin chào! Tôi là AI Tutor của LearnAI. Hôm nay bạn muốn ôn tập chủ đề nào? Elo hiện tại của bạn là 950." },
+    { role: "user" as const, text: "Giải thích cho tôi về Big O notation?" },
+    { role: "ai" as const, text: "Big O notation mô tả tốc độ tăng trưởng của thuật toán khi input tăng. Ví dụ: O(n) nghĩa là thời gian chạy tăng tuyến tính. Dựa trên Elo của bạn, tôi gợi ý bắt đầu với O(1), O(n), O(nÂ�) trước khi sang O(log n)." },
   ]);
   const [input, setInput] = useState("");
   const endRef = useRef<HTMLDivElement>(null);
 
-  const suggestions = ["O(log n) lí  gí¬?", "Giải thí­ch thuật toí¡n sắp xếp", "Ví­ dụ về O(nÂ²)"];
+  const suggestions = ["O(log n) là gì?", "Giải thích thuật toán sắp xếp", "Ví dụ về O(nÂ�)"];
 
   const send = (text: string) => {
     if (!text.trim()) return;
     setMessages(m => [...m, { role: "user", text }]);
     setInput("");
     setTimeout(() => {
-      setMessages(m => [...m, { role: "ai", text: "Cí¢u hỏi rấpt hay! Dựa tríªn trình độ Elo 950 của bạn, đí¢y lí  giải thí­ch phí¹ hợp nhấpt: " + text.toLowerCase().includes("log") ? "O(log n) xuấpt hiện trong thuật toí¡n Binary Search â€” mỗi bước loại bỏ nửa phần tử, níªn chỉ cần logâ‚‚(n) bước." : "Tí´i sẽ cung cấpp gợi ý phí¹ hợp với trình độ của bạn. Hí£y thử lí m bí i tập nhỏ ní y trước nhí©!" }]);
+      setMessages(m => [...m, { role: "ai", text: "Câu hỏi rấpt hay! Dựa trên trình độ Elo 950 của bạn, đây là giải thích phù hợp nhất: " + text.toLowerCase().includes("log") ? "O(log n) xuất hiện trong thuật toán Binary Search — mỗi bước loại bỏ nửa phần tử, nên chỉ cần log₂(n) bước." : "Tôi sẽ cung cấp gợi ý phù hợp với trình độ của bạn. Hãy thử làm bài tập nhỏ này trước nhé!" }]);
     }, 800);
   };
 
@@ -1000,13 +1000,13 @@ function AIDemo() {
               của bạn
             </h2>
             <p className="text-[#7878a0] leading-relaxed mb-8 text-sm">
-              Không chỉ trả lời â€” AI Tutor phí¢n tí­ch trình độ Elo, lịch sử học tập ví  đưa ra gợi ý tối ưu cho từng câu hỏi của bạn.
+              Không chỉ trả lời — AI Tutor phân tích trình độ Elo, lịch sử học tập và đưa ra gợi ý tối ưu cho từng câu hỏi của bạn.
             </p>
             <div className="space-y-4">
               {[
-                { icon: BookOpen, title: "Đí o tạo tríªn tài liệu", desc: "Phí¢n tí­ch sí¡ch gií¡o khoa, slide bí i giảng ví  đề thi" },
-                { icon: Lightbulb, title: "Gợi ý thí­ch ứng", desc: "Hints phí¹ hợp cấp Bloom tương ứng trình độ Elo" },
-                { icon: Globe, title: "Đa ngôn ngữ", desc: "Hỗ trợ tiếng Việt ví  tiếng Anh tự nhiíªn" },
+                { icon: BookOpen, title: "Đào tạo trên tài liệu", desc: "Phân tích sách giáo khoa, slide bài giảng và đề thi" },
+                { icon: Lightbulb, title: "Gợi ý thích ứng", desc: "Hints phù hợp cấp Bloom tương ứng trình độ Elo" },
+                { icon: Globe, title: "Đa ngôn ngữ", desc: "Hỗ trợ tiếng Việt và tiếng Anh tự nhiên" },
               ].map(({ icon: Icon, title, desc }) => (
                 <div key={title} className="flex items-start gap-3">
                   <div className="w-8 h-8 rounded-lg bg-orange-500/10 border border-orange-400/15 flex items-center justify-center flex-shrink-0 mt-0.5">
@@ -1035,7 +1035,7 @@ function AIDemo() {
                 <Brain className="w-4 h-4 text-white" />
               </div>
               <div className="flex-1">
-                <div className="text-sm font-semibold text-white">AI Tutor Â· Lập Trình</div>
+                <div className="text-sm font-semibold text-white">AI Tutor � Lập Trình</div>
                 <div className="text-xs text-[#7878a0] font-jetbrains">Elo bạn: <span className="text-cyan-400">950</span></div>
               </div>
               <div className="flex items-center gap-1.5 text-xs text-emerald-400 font-medium">
@@ -1086,7 +1086,7 @@ function AIDemo() {
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
                 onKeyDown={(e) => e.key === "Enter" && send(input)}
-                placeholder="Hỏi AI Tutor bấpt cứ điều gí¬..."
+                placeholder="Hỏi AI Tutor bấpt cứ điều gì..."
                 className="flex-1 bg-[#14142a] border border-white/6 rounded-xl px-4 py-2.5 text-sm text-[#e0e0f0] placeholder:text-[#5050780] outline-none focus:border-orange-400/30 transition-colors"
               />
               <button
@@ -1110,27 +1110,27 @@ function Testimonials() {
   const reviews = [
     {
       name: "Nguyễn Minh Tuấpn",
-      role: "Sinh viên năm 3 Â· CNTT",
+      role: "Sinh viên năm 3 � CNTT",
       avatar: "NMT",
       color: "bg-cyan-500",
       rating: 5,
-      text: "LearnAI thực sự thay đổi cí¡ch tôi học Toí¡n. Trước đí¢y tôi cứ lí m lại những bí i dễ, nhưng giờ hệ thống luôn đẩy tôi ví o đúng ví¹ng thí¡ch thức. Điểm Elo từ 800 líªn 1050 sau 8 tuần!",
+      text: "LearnAI thực sự thay đổi cách tôi học Toán. Trước đây tôi cứ làm lại những bài dễ, nhưng giờ hệ thống luôn đẩy tôi vào đúng vùng thách thức. Điểm Elo từ 800 lên 1050 sau 8 tuần!",
     },
     {
       name: "Trần Thị Lan",
-      role: "Sinh viên năm 2 Â· Khoa học máy tính",
+      role: "Sinh viên năm 2 � Khoa học máy tính",
       avatar: "TTL",
       color: "bg-violet-500",
       rating: 5,
-      text: "AI Tutor giải thí­ch rấpt tự nhiíªn, không chỉ đưa đáp í¡n mí  cí²n hỏi ngược lại để tôi suy nghĩ. Tí´i thí­ch nhấpt lí  ní³ biết trình độ của mình ví  không giải thí­ch quí¡ đơn giản hay quí¡ khí³.",
+      text: "AI Tutor giải thích rấpt tự nhiên, không chỉ đưa đáp án mà còn hỏi ngược lại để tôi suy nghĩ. Tôi thích nhất là nó biết trình độ của mình và không giải thích quá đơn giản hay quá khó.",
     },
     {
-      name: "Líª Hoí ng Phíºc",
-      role: "Sinh viên năm 4 Â· Kỹ thuật phần mềm",
+      name: "Lê Hoàng Phúc",
+      role: "Sinh viên năm 4 � Kỹ thuật phần mềm",
       avatar: "LHP",
       color: "bg-emerald-500",
       rating: 5,
-      text: "Dashboard rấpt trực quan, tôi thấpy ríµ mình yếu chủ đề ní o ví  cần ôn bí i gí¬. Spaced Repetition thực sự hiệu quả â€” tôi không cí²n quíªn bí i ngay sau khi học nữa.",
+      text: "Dashboard rấpt trực quan, tôi thấpy rõ mình yếu chủ đề nào và cần ôn bài gì. Spaced Repetition thực sự hiệu quả — tôi không còn quên bài ngay sau khi học nữa.",
     },
   ];
 
@@ -1144,7 +1144,7 @@ function Testimonials() {
           className="mb-16 text-center"
         >
           <span className="font-jetbrains text-xs text-emerald-400 tracking-[0.2em] uppercase mb-3 block">
-            {"//"} Cộng đồng nói gí¬
+            {"//"} Cộng đồng nói gì
           </span>
           <h2 className="font-bricolage text-4xl md:text-5xl font-extrabold text-white">
             Học viên{" "}
@@ -1193,28 +1193,28 @@ function Testimonials() {
 function FAQ() {
   const faqs = [
     {
-      q: "Hệ thống Elo Rating hoạt động như thế ní o?",
-      a: "Mỗi câu hỏi ví  mỗi học viên đều có Elo rating riíªng. Khi bạn trả lời đúng câu khí³, Elo của bạn tăng nhiều; trả lời sai câu dễ, Elo giảm í­t. Hệ thống chọn câu hỏi sao cho tỷ lệ đúng của bạn dao động trong ví¹ng 70â€“85% â€” điểm tối ưu cho học tập theo nghiên cứu khoa học nhận thức.",
+      q: "Hệ thống Elo Rating hoạt động như thế nào?",
+      a: "Mỗi câu hỏi và mỗi học viên đều có Elo rating riêng. Khi bạn trả lời đúng câu khó, Elo của bạn tăng nhiều; trả lời sai câu dễ, Elo giảm ít. Hệ thống chọn câu hỏi sao cho tỷ lệ đúng của bạn dao động trong vùng 70–85% — điểm tối ưu cho học tập theo nghiên cứu khoa học nhận thức.",
     },
     {
-      q: "SM-2 Spaced Repetition khí¡c gí¬ so với học bí¬nh thường?",
-      a: "Học bí¬nh thường bạn ôn đều đặn mỗi ngí y, không phí¢n biệt bí i ní o đí£ thuộc hay chưa. SM-2 tí­nh toí¡n khoảng cí¡ch tối ưu giữa cí¡c lần ôn dựa tríªn mức độ ghi nhớ của bạn â€” bí i đí£ thuộc sẽ ôn sau 1 tuần, bí i chưa thuộc ôn sau 1 ngí y. Kết quả lí  học í­t hơn 40% thời gian mí  nhớ lí¢u hơn gấpp đí´i.",
+      q: "SM-2 Spaced Repetition khác gì so với học bình thường?",
+      a: "Học bình thường bạn ôn đều đặn mỗi ngày, không phân biệt bài nào đã thuộc hay chưa. SM-2 tính toán khoảng cách tối ưu giữa các lần ôn dựa trên mức độ ghi nhớ của bạn — bài đã thuộc sẽ ôn sau 1 tuần, bài chưa thuộc ôn sau 1 ngày. Kết quả là học ít hơn 40% thời gian mà nhớ lâu hơn gấpp đôi.",
     },
     {
-      q: "AI Tutor được đào tạo tríªn dữ liệu gí¬?",
-      a: "AI Tutor được fine-tune tríªn tài liệu từng khí³a học: sí¡ch gií¡o khoa, slide bí i giảng, đề thi cũ ví  bí i tập mẫu. Khi trả lời, ní³ cũng tham chiếu Elo rating hiện tại của bạn để điều chỉnh độ phức tạp của giải thí­ch â€” không quí¡ đơn giản, không quí¡ khí³.",
+      q: "AI Tutor được đào tạo trên dữ liệu gì?",
+      a: "AI Tutor được fine-tune trên tài liệu từng khóa học: sách giáo khoa, slide bài giảng, đề thi cũ và bài tập mẫu. Khi trả lời, nó cũng tham chiếu Elo rating hiện tại của bạn để điều chỉnh độ phức tạp của giải thích — không quá đơn giản, không quá khó.",
     },
     {
-      q: "Bloom Taxonomy được tí­ch hợp như thế ní o?",
-      a: "Mỗi câu hỏi được phí¢n loại theo 6 cấpp độ nhận thức của Bloom: Nhớ, Hiểu, Ứng dụng, Phí¢n tí­ch, Đí¡nh gií¡, Sí¡ng tạo. Hệ thống không chỉ đảm bảo bạn nhớ kiến thức, mí  cí²n phí¡t triển khả năng ứng dụng ví  tư duy phíª phí¡n â€” điều mí  học vẹt không lí m được.",
+      q: "Bloom Taxonomy được tích hợp như thế nào?",
+      a: "Mỗi câu hỏi được phân loại theo 6 cấp độ nhận thức của Bloom: Nhớ, Hiểu, Ứng dụng, Phân tích, Đánh giá, Sáng tạo. Hệ thống không chỉ đảm bảo bạn nhớ kiến thức, mà còn phát triển khả năng ứng dụng và tư duy phê phán — điều mà học vẹt không làm được.",
     },
     {
-      q: "Tí´i có thể xem tiến bộ của mình như thế ní o?",
-      a: "Dashboard cung cấpp đầy đủ: biểu đồ Elo theo thời gian, bản đồ nhiệt thành thạo từng chủ đề, thống kíª session học tập, streak ngí y học liíªn tiếp, ví  so sí¡nh với trung bí¬nh cộng đồng. Bạn có thể export báo cáo PDF để chia sẻ với gií¡o viên hoặc mentor.",
+      q: "Tôi có thể xem tiến bộ của mình như thế nào?",
+      a: "Dashboard cung cấp đầy đủ: biểu đồ Elo theo thời gian, bản đồ nhiệt thành thạo từng chủ đề, thống kê session học tập, streak ngày học liên tiếp, và so sánh với trung bình cộng đồng. Bạn có thể export báo cáo PDF để chia sẻ với giáo viên hoặc mentor.",
     },
     {
       q: "LearnAI có miễn phí không?",
-      a: "Hoí n toí n miễn phí trong giai đoạn beta. Tấpt cả tí­nh năng â€” Elo Rating, Spaced Repetition, Dashboard analytics, AI Tutor ví  toí n bộ ngí¢n hí ng câu hỏi â€” đều được mở không giới hạn cho sinh viên đăng ký.",
+      a: "Hoàn toàn miễn phí trong giai đoạn beta. Tấpt cả tính năng — Elo Rating, Spaced Repetition, Dashboard analytics, AI Tutor và toàn bộ ngân hàng câu hỏi — đều được mở không giới hạn cho sinh viên đăng ký.",
     },
   ];
 
@@ -1228,12 +1228,12 @@ function FAQ() {
           className="mb-12 text-center"
         >
           <span className="font-jetbrains text-xs text-cyan-400 tracking-[0.2em] uppercase mb-3 block">
-            {"//"} Cí¢u hỏi thường gặp
+            {"//"} Câu hỏi thường gặp
           </span>
           <h2 className="font-bricolage text-4xl md:text-5xl font-extrabold text-white">
-            Cí³ thắc mắc?{" "}
+            Có thắc mắc?{" "}
             <span className="bg-gradient-to-r from-cyan-300 to-violet-400 bg-clip-text text-transparent">
-              Chíºng tôi giải đáp
+              Chúng tôi giải đáp
             </span>
           </h2>
         </motion.div>
@@ -1315,7 +1315,7 @@ function CTA() {
               </span>
             </h2>
             <p className="text-[#8080a8] text-lg mb-10 max-w-xl mx-auto leading-relaxed">
-              Tham gia cùng 500+ sinh viên đang trải nghiệm học tập cá nhân hóa thực sự. Hoí n toí n miễn phí â€” không cần thẻ tí­n dụng.
+              Tham gia cùng 500+ sinh viên đang trải nghiệm học tập cá nhân hóa thực sự. Hoàn toàn miễn phí — không cần thẻ tín dụng.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center mb-10">
               <button className="group flex items-center justify-center gap-2 px-8 py-4 rounded-xl bg-gradient-to-r from-cyan-500 to-cyan-400 text-[#06060e] font-semibold text-base hover:from-cyan-400 hover:to-cyan-300 transition-all duration-200 shadow-[0_0_40px_rgba(34,211,238,0.4)] hover:shadow-[0_0_56px_rgba(34,211,238,0.62)]">
@@ -1330,7 +1330,7 @@ function CTA() {
             </div>
             <div className="flex flex-wrap justify-center gap-6 text-sm text-[#7878a0]">
               {[
-                { icon: Shield, text: "Miễn phí­ 100%" },
+                { icon: Shield, text: "Miễn phí 100%" },
                 { icon: Users, text: "500+ sinh viên" },
                 { icon: Award, text: "Đề tài NCKH 2024" },
               ].map(({ icon: Icon, text }) => (
@@ -1353,8 +1353,8 @@ function CTA() {
 function Footer() {
   const links = {
     "Sản phẩm": ["Tính năng", "Dashboard", "AI Tutor", "Môn học"],
-    "Nghiíªn cứu": ["Elo Rating", "Spaced Repetition", "Bloom Taxonomy", "Cognition"],
-    "Liíªn hệ": ["Về dự í¡n", "Đội ngũ", "GitHub", "Bí¡o lỗi"],
+    "Nghiên cứu": ["Elo Rating", "Spaced Repetition", "Bloom Taxonomy", "Cognition"],
+    "Liên hệ": ["Về dự án", "Đội ngũ", "GitHub", "Báo lỗi"],
   };
 
   return (
@@ -1372,7 +1372,7 @@ function Footer() {
               </span>
             </div>
             <p className="text-[#7878a0] text-sm leading-relaxed max-w-xs mb-5">
-              Học tập cá nhân hóa thực sự, được xí¢y dựng tríªn nền tảng khoa học nhận thức ví  trí­ tuệ nhí¢n tạo.
+              Học tập cá nhân hóa thực sự, được xây dựng trên nền tảng khoa học nhận thức và trí tuệ nhân tạo.
             </p>
             <div className="flex gap-3">
               {["Gh", "Fb", "Em"].map((s) => (
@@ -1404,7 +1404,7 @@ function Footer() {
 
         <div className="pt-6 border-t border-white/5 flex flex-col md:flex-row justify-between gap-3">
           <p className="text-xs text-[#5050780] font-jetbrains">
-            Â© 2024 LearnAI Â· Đề tài Nghiíªn cứu Khoa học Sinh viên
+            � 2024 LearnAI � Đề tài Nghiên cứu Khoa học Sinh viên
           </p>
           <div className="flex gap-5">
             <Link href="/terms" className="text-xs text-[#505070] hover:text-[#9090b8] transition-colors">
