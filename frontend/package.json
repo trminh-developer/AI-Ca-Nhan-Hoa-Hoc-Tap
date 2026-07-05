@@ -10,12 +10,13 @@
   },
   "dependencies": {
     "@radix-ui/react-accordion": "^1.2.15",
+    "es-toolkit": "^1.49.0",
     "lucide-react": "^1.23.0",
     "motion": "^12.42.2",
     "next": "16.2.10",
     "react": "19.2.4",
     "react-dom": "19.2.4",
-    "recharts": "^3.9.2"
+    "recharts": "^2.15.1"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4.3.2",
