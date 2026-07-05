@@ -1,6 +1,7 @@
 "use client";
 import { useState, useEffect, useRef } from "react";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 import { motion, useInView } from "motion/react";
 import {
   Brain, Target, Clock, MessageSquare, BarChart3, BookOpen, Zap,
@@ -1406,11 +1407,15 @@ function Footer() {
             Â© 2024 LearnAI Â· Đề tài Nghiíªn cứu Khoa học Sinh viên
           </p>
           <div className="flex gap-5">
-            {["Điều khoản", "Bảo mật", "Cookie"].map((t) => (
-              <a key={t} href="#" className="text-xs text-[#505070] hover:text-[#9090b8] transition-colors">
-                {t}
-              </a>
-            ))}
+            <Link href="/terms" className="text-xs text-[#505070] hover:text-[#9090b8] transition-colors">
+              Điều khoản
+            </Link>
+            <Link href="/privacy" className="text-xs text-[#505070] hover:text-[#9090b8] transition-colors">
+              Bảo mật
+            </Link>
+            <Link href="/cookie" className="text-xs text-[#505070] hover:text-[#9090b8] transition-colors">
+              Cookie
+            </Link>
           </div>
         </div>
       </div>
@@ -1425,6 +1430,7 @@ export default function App() {
   const [scrolled, setScrolled] = useState(false);
 
   useEffect(() => {
+    window.scrollTo(0, 0);
     const fn = () => setScrolled(window.scrollY > 40);
     window.addEventListener("scroll", fn, { passive: true });
     return () => window.removeEventListener("scroll", fn);
