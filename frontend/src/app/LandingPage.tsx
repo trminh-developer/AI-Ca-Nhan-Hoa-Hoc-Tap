@@ -143,10 +143,10 @@ function Nav({ scrolled }: { scrolled: boolean }) {
         </nav>
 
         <div className="hidden md:flex items-center gap-3">
-          <button className="text-sm text-[#7878a0] hover:text-white transition-colors px-4 py-2 font-medium">
+          <button onClick={() => router.push('/login')} className="text-sm text-[#7878a0] hover:text-white transition-colors px-4 py-2 font-medium">
             Đăng nhập
           </button>
-          <button className="relative text-sm font-semibold px-5 py-2 rounded-lg bg-gradient-to-r from-cyan-500 to-cyan-400 text-[#06060e] hover:from-cyan-400 hover:to-cyan-300 transition-all duration-200 shadow-[0_0_22px_rgba(34,211,238,0.35)] hover:shadow-[0_0_32px_rgba(34,211,238,0.55)]">
+          <button onClick={() => router.push('/register')} className="relative text-sm font-semibold px-5 py-2 rounded-lg bg-gradient-to-r from-cyan-500 to-cyan-400 text-[#06060e] hover:from-cyan-400 hover:to-cyan-300 transition-all duration-200 shadow-[0_0_22px_rgba(34,211,238,0.35)] hover:shadow-[0_0_32px_rgba(34,211,238,0.55)]">
             Bắt đầu miễn phí
           </button>
         </div>
@@ -167,7 +167,7 @@ function Nav({ scrolled }: { scrolled: boolean }) {
               {l.label}
             </a>
           ))}
-          <button className="text-sm font-semibold px-5 py-3 rounded-xl bg-gradient-to-r from-cyan-500 to-cyan-400 text-[#06060e] mt-1">
+          <button onClick={() => router.push('/register')} className="text-sm font-semibold px-5 py-3 rounded-xl bg-gradient-to-r from-cyan-500 to-cyan-400 text-[#06060e] mt-1">
             Bắt đầu miễn phí
           </button>
         </motion.div>
@@ -221,7 +221,7 @@ function Hero() {
           className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-cyan-500/28 bg-cyan-500/7 text-cyan-300 text-xs font-semibold mb-8 backdrop-blur-md"
         >
           <Sparkles className="w-3.5 h-3.5 animate-pulse" />
-          Nghiíªn cứu Khoa học Sinh viên Â· 2024
+          Nghiên cứu Khoa học Sinh viên · 2024
           <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse ml-1" />
         </motion.div>
 

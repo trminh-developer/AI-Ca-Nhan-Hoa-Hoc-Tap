@@ -22,7 +22,7 @@ export default function TermsPage() {
           <h2 className="text-xl font-semibold text-white mt-8 mb-4">2. Mô tả dịch vụ</h2>
           <p>
             LearnAI là hệ thống học tập cá nhân hóa sử dụng thuật toán Elo Rating và Spaced Repetition
-            để tối ưu hóa lộ trình học tập. Dịch vụ được cung cấp "như nguyên trạng" (as is) và "khi có sẵn".
+            để tối ưu hóa lộ trình học tập. Dịch vụ được cung cấp &quot;như nguyên trạng&quot; (as is) và &quot;khi có sẵn&quot;.
           </p>
 
           <h2 className="text-xl font-semibold text-white mt-8 mb-4">3. Trách nhiệm người dùng</h2>
