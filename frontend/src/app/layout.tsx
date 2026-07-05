@@ -3,7 +3,7 @@ import { Inter, Bricolage_Grotesque, JetBrains_Mono } from "next/font/google";
 import "@/app/globals.css";
 import Chatbot from "@/components/chat/Chatbot";
 
-const inter = Inter({ subsets: ["latin", "vietnamese"], weight: ["300", "400", "500", "600", "700", "800", "900"] });
+const inter = Inter({ subsets: ["latin", "vietnamese"], weight: ["300", "400", "500", "600", "700", "800", "900"], variable: '--font-inter' });
 const bricolage = Bricolage_Grotesque({ subsets: ["latin", "vietnamese"], weight: ["400", "500", "600", "700", "800"], variable: '--font-bricolage' });
 const jetbrains = JetBrains_Mono({ subsets: ["latin", "vietnamese"], weight: ["400", "500", "600", "700"], variable: '--font-jetbrains' });
 
@@ -20,7 +20,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="vi">
-      <body className={`${inter.className} ${bricolage.variable} ${jetbrains.variable}`}>
+      <body className={`${inter.variable} ${bricolage.variable} ${jetbrains.variable} font-sans bg-background text-foreground`}>
         {children}
         <Chatbot />
       </body>

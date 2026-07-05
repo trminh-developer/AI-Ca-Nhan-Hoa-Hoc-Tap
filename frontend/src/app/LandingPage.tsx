@@ -1,5 +1,6 @@
 "use client";
 import { useState, useEffect, useRef } from "react";
+import { useRouter } from "next/navigation";
 import { motion, useInView } from "motion/react";
 import {
   Brain, Target, Clock, MessageSquare, BarChart3, BookOpen, Zap,
@@ -100,6 +101,7 @@ function KineticBackground() {
 â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 function Nav({ scrolled }: { scrolled: boolean }) {
   const [open, setOpen] = useState(false);
+  const router = useRouter();
   const links = [
     { label: "Tính năng", href: "#features" },
     { label: "Dashboard", href: "#dashboard" },
@@ -178,6 +180,7 @@ function Nav({ scrolled }: { scrolled: boolean }) {
 â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 function Hero() {
   const typed = useTypewriter(["Elo Rating", "Spaced Repetition", "AI Chatbot", "Bloom Taxonomy"], 75, 2200);
+  const router = useRouter();
 
   return (
     <section className="relative min-h-screen flex flex-col items-center justify-center px-6 pt-24 pb-16 overflow-hidden">
@@ -254,7 +257,10 @@ function Hero() {
           transition={{ duration: 0.7, delay: 0.32 }}
           className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-16"
         >
-          <button className="group flex items-center gap-2 px-8 py-4 rounded-xl bg-gradient-to-r from-cyan-500 to-cyan-400 text-[#06060e] font-semibold text-base hover:from-cyan-400 hover:to-cyan-300 transition-all duration-200 shadow-[0_0_32px_rgba(34,211,238,0.38)] hover:shadow-[0_0_48px_rgba(34,211,238,0.6)]">
+          <button 
+            onClick={() => router.push('/register')}
+            className="group flex items-center gap-2 px-8 py-4 rounded-xl bg-gradient-to-r from-cyan-500 to-cyan-400 text-[#06060e] font-semibold text-base hover:from-cyan-400 hover:to-cyan-300 transition-all duration-200 shadow-[0_0_32px_rgba(34,211,238,0.38)] hover:shadow-[0_0_48px_rgba(34,211,238,0.6)]"
+          >
             <Zap className="w-4 h-4" />
             Bắt đầu học ngay
             <ArrowRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
@@ -1272,6 +1278,7 @@ function FAQ() {
    CTA
 â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 function CTA() {
+  const router = useRouter();
   return (
     <section className="relative z-10 py-24 px-6">
       <div className="max-w-5xl mx-auto">
@@ -1424,7 +1431,7 @@ export default function App() {
   }, []);
 
   return (
-    <div className="relative min-h-screen overflow-x-hidden" style={{ fontFamily: "'DM Sans', sans-serif" }}>
+    <div className="relative min-h-screen overflow-x-hidden font-sans">
       <KineticBackground />
       <Nav scrolled={scrolled} />
       <main>

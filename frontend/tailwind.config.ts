@@ -30,8 +30,9 @@ const config: Config = {
         ring: "var(--ring)",
       },
       fontFamily: {
-        bricolage: ["var(--font-bricolage)"],
-        jetbrains: ["var(--font-jetbrains)"],
+        sans: ["var(--font-inter)", "sans-serif"],
+        bricolage: ["var(--font-bricolage)", "sans-serif"],
+        jetbrains: ["var(--font-jetbrains)", "monospace"],
       }
     },
   },
