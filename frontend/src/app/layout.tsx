@@ -1,10 +1,12 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Inter, Bricolage_Grotesque, JetBrains_Mono } from "next/font/google";
 import "@/styles/globals.css";
 import "@/app/globals.css";
 import Chatbot from "@/components/chat/Chatbot";
 
 const inter = Inter({ subsets: ["latin", "vietnamese"], weight: ["300", "400", "500", "600", "700", "800", "900"] });
+const bricolage = Bricolage_Grotesque({ subsets: ["latin", "vietnamese"], weight: ["400", "500", "600", "700", "800"], variable: '--font-bricolage' });
+const jetbrains = JetBrains_Mono({ subsets: ["latin", "vietnamese"], weight: ["400", "500", "600", "700"], variable: '--font-jetbrains' });
 
 export const metadata: Metadata = {
   title: "LearnAI - Học tập thông minh với AI",
@@ -19,7 +21,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="vi">
-      <body className={inter.className}>
+      <body className={`${inter.className} ${bricolage.variable} ${jetbrains.variable}`}>
         {children}
         <Chatbot />
       </body>
