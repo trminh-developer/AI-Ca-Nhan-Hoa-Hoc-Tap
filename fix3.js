@@ -1,0 +1,1 @@
+const fs = require('fs'); let code = fs.readFileSync('frontend/src/app/LandingPage.tsx', 'utf8'); code = code.replace(/Â²/g, '²'); code = code.replace(/â‚‚/g, '?'); code = code.replace(/Â·/g, '·'); code = code.replace(/Â©/g, '©'); fs.writeFileSync('frontend/src/app/LandingPage.tsx', code, 'utf8');
