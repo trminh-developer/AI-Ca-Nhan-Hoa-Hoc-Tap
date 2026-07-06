@@ -221,7 +221,7 @@ function Hero() {
           className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-cyan-500/28 bg-cyan-500/7 text-cyan-300 text-xs font-semibold mb-8 backdrop-blur-md"
         >
           <Sparkles className="w-3.5 h-3.5 animate-pulse" />
-          Nghiên cứu Khoa học Sinh viên � 2024
+          Nghiên cứu Khoa học Sinh viên · 2024
           <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse ml-1" />
         </motion.div>
 
@@ -956,19 +956,19 @@ function AIDemo() {
   const [messages, setMessages] = useState([
     { role: "ai" as const, text: "Xin chào! Tôi là AI Tutor của LearnAI. Hôm nay bạn muốn ôn tập chủ đề nào? Elo hiện tại của bạn là 950." },
     { role: "user" as const, text: "Giải thích cho tôi về Big O notation?" },
-    { role: "ai" as const, text: "Big O notation mô tả tốc độ tăng trưởng của thuật toán khi input tăng. Ví dụ: O(n) nghĩa là thời gian chạy tăng tuyến tính. Dựa trên Elo của bạn, tôi gợi ý bắt đầu với O(1), O(n), O(nÂ�) trước khi sang O(log n)." },
+    { role: "ai" as const, text: "Big O notation mô tả tốc độ tăng trưởng của thuật toán khi input tăng. Ví dụ: O(n) nghĩa là thời gian chạy tăng tuyến tính. Dựa trên Elo của bạn, tôi gợi ý bắt đầu với O(1), O(n), O(n²) trước khi sang O(log n)." },
   ]);
   const [input, setInput] = useState("");
   const endRef = useRef<HTMLDivElement>(null);
 
-  const suggestions = ["O(log n) là gì?", "Giải thích thuật toán sắp xếp", "Ví dụ về O(nÂ�)"];
+  const suggestions = ["O(log n) là gì?", "Giải thích thuật toán sắp xếp", "Ví dụ về O(n²)"];
 
   const send = (text: string) => {
     if (!text.trim()) return;
     setMessages(m => [...m, { role: "user", text }]);
     setInput("");
     setTimeout(() => {
-      setMessages(m => [...m, { role: "ai", text: "Câu hỏi rấpt hay! Dựa trên trình độ Elo 950 của bạn, đây là giải thích phù hợp nhất: " + text.toLowerCase().includes("log") ? "O(log n) xuất hiện trong thuật toán Binary Search — mỗi bước loại bỏ nửa phần tử, nên chỉ cần log₂(n) bước." : "Tôi sẽ cung cấp gợi ý phù hợp với trình độ của bạn. Hãy thử làm bài tập nhỏ này trước nhé!" }]);
+      setMessages(m => [...m, { role: "ai", text: "Câu hỏi rất hay! Dựa trên trình độ Elo 950 của bạn, đây là giải thích phù hợp nhất: " + text.toLowerCase().includes("log") ? "O(log n) xuất hiện trong thuật toán Binary Search — mỗi bước loại bỏ nửa phần tử, nên chỉ cần log₂(n) bước." : "Tôi sẽ cung cấp gợi ý phù hợp với trình độ của bạn. Hãy thử làm bài tập nhỏ này trước nhé!" }]);
     }, 800);
   };
 
@@ -1035,7 +1035,7 @@ function AIDemo() {
                 <Brain className="w-4 h-4 text-white" />
               </div>
               <div className="flex-1">
-                <div className="text-sm font-semibold text-white">AI Tutor � Lập Trình</div>
+                <div className="text-sm font-semibold text-white">AI Tutor · Lập Trình</div>
                 <div className="text-xs text-[#7878a0] font-jetbrains">Elo bạn: <span className="text-cyan-400">950</span></div>
               </div>
               <div className="flex items-center gap-1.5 text-xs text-emerald-400 font-medium">
@@ -1086,7 +1086,7 @@ function AIDemo() {
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
                 onKeyDown={(e) => e.key === "Enter" && send(input)}
-                placeholder="Hỏi AI Tutor bấpt cứ điều gì..."
+                placeholder="Hỏi AI Tutor bất cứ điều gì..."
                 className="flex-1 bg-[#14142a] border border-white/6 rounded-xl px-4 py-2.5 text-sm text-[#e0e0f0] placeholder:text-[#5050780] outline-none focus:border-orange-400/30 transition-colors"
               />
               <button
@@ -1109,8 +1109,8 @@ function AIDemo() {
 function Testimonials() {
   const reviews = [
     {
-      name: "Nguyễn Minh Tuấpn",
-      role: "Sinh viên năm 3 � CNTT",
+      name: "Nguyễn Minh Tuấn",
+      role: "Sinh viên năm 3 · CNTT",
       avatar: "NMT",
       color: "bg-cyan-500",
       rating: 5,
@@ -1118,19 +1118,19 @@ function Testimonials() {
     },
     {
       name: "Trần Thị Lan",
-      role: "Sinh viên năm 2 � Khoa học máy tính",
+      role: "Sinh viên năm 2 · Khoa học máy tính",
       avatar: "TTL",
       color: "bg-violet-500",
       rating: 5,
-      text: "AI Tutor giải thích rấpt tự nhiên, không chỉ đưa đáp án mà còn hỏi ngược lại để tôi suy nghĩ. Tôi thích nhất là nó biết trình độ của mình và không giải thích quá đơn giản hay quá khó.",
+      text: "AI Tutor giải thích rất tự nhiên, không chỉ đưa đáp án mà còn hỏi ngược lại để tôi suy nghĩ. Tôi thích nhất là nó biết trình độ của mình và không giải thích quá đơn giản hay quá khó.",
     },
     {
       name: "Lê Hoàng Phúc",
-      role: "Sinh viên năm 4 � Kỹ thuật phần mềm",
+      role: "Sinh viên năm 4 · Kỹ thuật phần mềm",
       avatar: "LHP",
       color: "bg-emerald-500",
       rating: 5,
-      text: "Dashboard rấpt trực quan, tôi thấpy rõ mình yếu chủ đề nào và cần ôn bài gì. Spaced Repetition thực sự hiệu quả — tôi không còn quên bài ngay sau khi học nữa.",
+      text: "Dashboard rất trực quan, tôi thấy rõ mình yếu chủ đề nào và cần ôn bài gì. Spaced Repetition thực sự hiệu quả — tôi không còn quên bài ngay sau khi học nữa.",
     },
   ];
 
@@ -1404,7 +1404,7 @@ function Footer() {
 
         <div className="pt-6 border-t border-white/5 flex flex-col md:flex-row justify-between gap-3">
           <p className="text-xs text-[#5050780] font-jetbrains">
-            � 2024 LearnAI � Đề tài Nghiên cứu Khoa học Sinh viên
+            © 2024 LearnAI · Đề tài Nghiên cứu Khoa học Sinh viên
           </p>
           <div className="flex gap-5">
             <Link href="/terms" className="text-xs text-[#505070] hover:text-[#9090b8] transition-colors">
