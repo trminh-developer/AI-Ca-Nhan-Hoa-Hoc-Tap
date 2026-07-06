@@ -11,8 +11,10 @@ Bao gồm:
 import sys
 from contextlib import asynccontextmanager
 
-from fastapi import FastAPI
+from fastapi import FastAPI, BackgroundTasks
 from fastapi.middleware.cors import CORSMiddleware
+from apscheduler.schedulers.background import BackgroundScheduler
+import datetime
 
 try:
     sys.stdout.reconfigure(encoding='utf-8')
@@ -61,10 +63,28 @@ async def lifespan(app: FastAPI):
     print("🎓 Adaptive Learning Platform sẵn sàng!")
     print("📖 Truy cập API docs tại: http://localhost:8000/docs")
     
+    # Khởi tạo Scheduler (Cron jobs)
+    scheduler = BackgroundScheduler()
+    
+    def nightly_cleanup():
+        print(f"[{datetime.datetime.now()}] 🧹 Đang chạy Cron Job: dọn dẹp hệ thống...")
+        # TODO: Implement real cleanup logic
+    
+    def weekly_report():
+        print(f"[{datetime.datetime.now()}] 📊 Đang chạy Cron Job: Tổng hợp báo cáo tuần...")
+        # TODO: Implement weekly report logic
+
+    scheduler.add_job(nightly_cleanup, 'cron', hour=2, minute=0) # Chạy lúc 2:00 sáng mỗi ngày
+    scheduler.add_job(weekly_report, 'cron', day_of_week='sun', hour=23, minute=0) # Chạy Chủ nhật lúc 23:00
+    
+    scheduler.start()
+    print("⏳ Đã khởi động Hệ thống Background Scheduler")
+    
     yield  # Ứng dụng đang chạy
     
     # === SHUTDOWN ===
     print("👋 Đang tắt Adaptive Learning Platform...")
+    scheduler.shutdown()
 
 
 # Tạo FastAPI app

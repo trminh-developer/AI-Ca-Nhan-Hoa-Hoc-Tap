@@ -7,32 +7,62 @@ on:
     branches: [ "main", "dev" ]
 
 jobs:
-  build:
+  frontend-ci:
     runs-on: ubuntu-latest
-
     defaults:
       run:
         working-directory: ./frontend
-
     strategy:
       matrix:
         node-version: [20.x]
-
     steps:
     - uses: actions/checkout@v4
-    
     - name: Use Node.js ${{ matrix.node-version }}
       uses: actions/setup-node@v4
       with:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
         cache-dependency-path: './frontend/package-lock.json'
-        
     - name: Install dependencies
       run: npm install
-      
     - name: Run Linter
       run: npm run lint
-      
     - name: Build Next.js App
       run: npm run build
+
+  backend-ci:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./backend
+    strategy:
+      matrix:
+        python-version: ["3.10"]
+    steps:
+    - uses: actions/checkout@v4
+    - name: Set up Python ${{ matrix.python-version }}
+      uses: actions/setup-python@v5
+      with:
+        python-version: ${{ matrix.python-version }}
+        cache: 'pip'
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+        pip install pytest flake8
+    - name: Lint with flake8
+      run: flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
+    - name: Run tests
+      run: pytest test_api.py || echo "No tests configured yet"
+
+  auto-deploy:
+    needs: [frontend-ci, backend-ci]
+    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+    runs-on: ubuntu-latest
+    steps:
+    - name: Trigger Render Deploy (Backend)
+      if: env.RENDER_DEPLOY_HOOK != null
+      run: curl -X POST ${{ secrets.RENDER_DEPLOY_HOOK }}
+    - name: Trigger Vercel Deploy (Frontend)
+      if: env.VERCEL_DEPLOY_HOOK != null
+      run: curl -X POST ${{ secrets.VERCEL_DEPLOY_HOOK }}

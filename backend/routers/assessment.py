@@ -4,7 +4,7 @@ Assessment Router - Quản lý bài kiểm tra (quiz) theo Elo.
 
 from datetime import datetime, timezone
 
-from fastapi import APIRouter, Depends, HTTPException, status
+from fastapi import APIRouter, Depends, HTTPException, status, BackgroundTasks
 from sqlalchemy.orm import Session
 
 from database import get_db
@@ -21,6 +21,7 @@ from schemas.learning import (
 from services.auth_service import get_current_user
 from services.elo_engine import elo_engine
 from services.sm2_engine import sm2_engine
+from services.background_tasks import process_quiz_submission_bg
 
 router = APIRouter(prefix="/api/quiz", tags=["Quiz / Assessment"])
 
@@ -113,11 +114,13 @@ def start_quiz(
 @router.post("/submit", response_model=QuizResult)
 def submit_quiz(
     quiz: QuizSubmit,
+    background_tasks: BackgroundTasks,
     db: Session = Depends(get_db),
     current_user: User = Depends(get_current_user),
 ):
     """
-    Nộp bài kiểm tra - Xử lý tất cả câu trả lời và trả về kết quả.
+    Nộp bài kiểm tra - Xử lý tính điểm nhanh và đẩy các tác vụ nặng chạy ngầm.
+    
     
     Quy trình cho mỗi câu:
     1. Kiểm tra đáp án
@@ -165,81 +168,8 @@ def submit_quiz(
         current_user.overall_elo = new_learner_elo
         question.difficulty_elo = new_item_elo
         
-        # Cập nhật Learner Mastery
-        mastery = db.query(LearnerMastery).filter(
-            LearnerMastery.user_id == current_user.id,
-            LearnerMastery.topic_id == question.topic_id,
-        ).first()
-        
-        if not mastery:
-            mastery = LearnerMastery(
-                user_id=current_user.id,
-                topic_id=question.topic_id,
-                mastery_score=0.0,
-                elo_rating=1500.0,
-                total_attempts=0,
-                correct_attempts=0,
-            )
-            db.add(mastery)
-        
-        mastery.total_attempts += 1
-        if is_correct:
-            mastery.correct_attempts += 1
-        mastery.mastery_score = mastery.correct_attempts / mastery.total_attempts
-        
-        topic_new_elo, _ = elo_engine.update_ratings(
-            learner_rating=mastery.elo_rating,
-            item_difficulty=question.difficulty_elo,
-            actual_score=actual_score,
-        )
-        mastery.elo_rating = topic_new_elo
-        mastery.last_practiced = datetime.now(timezone.utc)
-        
-        # Cập nhật SM-2
-        sr = db.query(SpacedRepetition).filter(
-            SpacedRepetition.user_id == current_user.id,
-            SpacedRepetition.question_id == question.id,
-        ).first()
-        
-        expected_success = elo_engine.expected_score(
-            current_user.overall_elo, question.difficulty_elo
-        )
-        quality = sm2_engine.calculate_quality(
-            is_correct=is_correct,
-            time_spent_ms=answer_item.time_spent_ms,
-            expected_success=expected_success,
-        )
-        
-        if not sr:
-            sr = SpacedRepetition(
-                user_id=current_user.id,
-                question_id=question.id,
-            )
-            db.add(sr)
-            db.flush()
-        
-        new_interval, new_reps, new_ef = sm2_engine.update(
-            quality=quality,
-            repetitions=sr.repetitions,
-            interval=sr.interval_days,
-            easiness_factor=sr.easiness_factor,
-        )
-        sr.interval_days = new_interval
-        sr.repetitions = new_reps
-        sr.easiness_factor = new_ef
-        sr.next_review = sm2_engine.get_next_review_date(new_interval)
-        
-        # Lưu Interaction
-        interaction = Interaction(
-            user_id=current_user.id,
-            question_id=question.id,
-            is_correct=is_correct,
-            time_spent_ms=answer_item.time_spent_ms,
-            hints_used=0,
-            elo_before=elo_before,
-            elo_after=new_learner_elo,
-        )
-        db.add(interaction)
+        # Bỏ phần cập nhật SM-2 và Learner Mastery ở đây, đẩy vào Background Task
+        # để API trả về kết quả tức thì.
         
         results.append(QuizResultItem(
             question_id=question.id,
@@ -249,8 +179,19 @@ def submit_quiz(
             elo_change=round(elo_change, 2),
         ))
     
-    # Commit tất cả
+    # Commit Elo thay đổi trên User và Question
     db.commit()
+    
+    # Kích hoạt Background Task để cập nhật SM-2, Mastery và Interaction
+    answers_data = [
+        {
+            "question_id": a.question_id,
+            "selected_answer": a.selected_answer,
+            "time_spent_ms": a.time_spent_ms
+        }
+        for a in quiz.answers
+    ]
+    background_tasks.add_task(process_quiz_submission_bg, current_user.id, answers_data)
     
     total_questions = len(results)
     accuracy = correct_count / total_questions if total_questions > 0 else 0.0
