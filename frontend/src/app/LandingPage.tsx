@@ -122,11 +122,11 @@ function Nav({ scrolled }: { scrolled: boolean }) {
       }`}
     >
       <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
-        <div className="flex items-center gap-2.5">
-          <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-cyan-400 to-violet-500 flex items-center justify-center shadow-[0_0_18px_rgba(34,211,238,0.45)]">
-            <Brain className="w-4 h-4 text-white" />
+        <div className="flex items-center gap-3">
+          <div className="w-10 h-10 flex items-center justify-center">
+            <img src="/logo.png" alt="LearnAI Logo" className="w-full h-full object-contain" />
           </div>
-          <span className="font-bricolage font-extrabold text-lg text-white tracking-tight">
+          <span className="font-bricolage font-extrabold text-xl text-white tracking-tight">
             Learn<span className="text-cyan-400">AI</span>
           </span>
           <span className="hidden sm:block ml-1 px-1.5 py-0.5 text-[9px] font-medium bg-cyan-400/10 text-cyan-300 rounded font-jetbrains border border-cyan-400/20">
@@ -1364,8 +1364,8 @@ function Footer() {
           {/* Brand */}
           <div className="col-span-2 md:col-span-1">
             <div className="flex items-center gap-2.5 mb-4">
-              <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-cyan-400 to-violet-500 flex items-center justify-center shadow-[0_0_16px_rgba(34,211,238,0.4)]">
-                <Brain className="w-4 h-4 text-white" />
+              <div className="w-8 h-8 flex items-center justify-center">
+                <img src="/logo.png" alt="LearnAI Logo" className="w-full h-full object-contain" />
               </div>
               <span className="font-bricolage font-extrabold text-lg text-white">
                 Learn<span className="text-cyan-400">AI</span>

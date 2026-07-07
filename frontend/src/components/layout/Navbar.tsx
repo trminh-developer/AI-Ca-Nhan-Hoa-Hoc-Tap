@@ -46,7 +46,9 @@ export default function Navbar() {
       <div className={`${styles.navContent} container`}>
         {/* Logo */}
         <a href="/dashboard" className={styles.logo}>
-          <span className={styles.logoIcon}>🧠</span>
+          <div style={{ width: '32px', height: '32px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+            <img src="/logo.png" alt="LearnAI Logo" style={{ width: '100%', height: '100%', objectFit: 'contain' }} />
+          </div>
           <span className={styles.logoText}>
             Learn<span className="gradient-text">AI</span>
           </span>
