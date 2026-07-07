@@ -124,7 +124,7 @@ function Nav({ scrolled }: { scrolled: boolean }) {
       <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
         <div className="flex items-center gap-3">
           <div className="w-10 h-10 flex items-center justify-center">
-            <img src="/logo.png" alt="Nyvora Logo" className="w-full h-full object-contain" />
+            <img src="/Nyvora-Remove-Background.png" alt="Nyvora Logo" className="w-full h-full object-contain" />
           </div>
           <span className="font-bricolage font-extrabold text-xl text-white tracking-tight">
             Nyvora
@@ -1365,7 +1365,7 @@ function Footer() {
           <div className="col-span-2 md:col-span-1">
             <div className="flex items-center gap-2.5 mb-4">
               <div className="w-8 h-8 flex items-center justify-center">
-                <img src="/logo.png" alt="Nyvora Logo" className="w-full h-full object-contain" />
+                <img src="/Nyvora-Remove-Background.png" alt="Nyvora Logo" className="w-full h-full object-contain" />
               </div>
               <span className="font-bricolage font-extrabold text-lg text-white">
                 Nyvora
