@@ -8,7 +8,7 @@ const bricolage = Bricolage_Grotesque({ subsets: ["latin", "vietnamese"], weight
 const jetbrains = JetBrains_Mono({ subsets: ["latin", "vietnamese"], weight: ["400", "500", "600", "700"], variable: '--font-jetbrains' });
 
 export const metadata: Metadata = {
-  title: "Nyvora - Học tập thông minh với AI",
+  title: "Nyvora",
   description: "Nền tảng học tập thích ứng sử dụng AI để cá nhân hóa nội dung theo năng lực người học. Elo Rating, SM-2 Spaced Repetition, Bloom's Taxonomy.",
   keywords: "AI, học tập, cá nhân hóa, adaptive learning, Elo rating, NCKH",
   icons: {
