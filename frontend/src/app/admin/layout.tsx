@@ -15,7 +15,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
         </nav>
         <div className={styles.bottomNav}>
           <Link href="/dashboard" className={styles.navLink}>
-            ← Quay lại LearnAI
+            ← Quay lại Nyvora
           </Link>
         </div>
       </aside>

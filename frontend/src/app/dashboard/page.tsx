@@ -53,7 +53,7 @@ export default function DashboardPage() {
       {/* Navbar */}
       <nav className={styles.navbar}>
         <div className={styles.navContent}>
-          <Link href="/" className={styles.logo}>🧠 LearnAI</Link>
+          <Link href="/" className={styles.logo}>🧠 Nyvora</Link>
           <div className={styles.navRight}>
             <span className={styles.userInfo}>
               <span className={styles.tierBadge} style={{ background: tier.color }}>{tier.name}</span>

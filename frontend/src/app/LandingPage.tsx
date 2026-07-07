@@ -124,10 +124,10 @@ function Nav({ scrolled }: { scrolled: boolean }) {
       <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
         <div className="flex items-center gap-3">
           <div className="w-10 h-10 flex items-center justify-center">
-            <img src="/logo.png" alt="LearnAI Logo" className="w-full h-full object-contain" />
+            <img src="/logo.png" alt="Nyvora Logo" className="w-full h-full object-contain" />
           </div>
           <span className="font-bricolage font-extrabold text-xl text-white tracking-tight">
-            Learn<span className="text-cyan-400">AI</span>
+            Nyvora
           </span>
           <span className="hidden sm:block ml-1 px-1.5 py-0.5 text-[9px] font-medium bg-cyan-400/10 text-cyan-300 rounded font-jetbrains border border-cyan-400/20">
             BETA
@@ -954,7 +954,7 @@ function HowItWorks() {
 â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 function AIDemo() {
   const [messages, setMessages] = useState([
-    { role: "ai" as const, text: "Xin chí o! Tí´i lí  AI Tutor của LearnAI. Hôm nay bạn muốn ôn tập chủ đề ní o? Elo hiện tại của bạn lí  950." },
+    { role: "ai" as const, text: "Xin chí o! Tí´i lí  AI Tutor của Nyvora. Hôm nay bạn muốn ôn tập chủ đề ní o? Elo hiện tại của bạn lí  950." },
     { role: "user" as const, text: "Giải thí­ch cho tôi về Big O notation?" },
     { role: "ai" as const, text: "Big O notation mí´ tả tốc độ tăng trưởng của thuật toí¡n khi input tăng. Ví­ dụ: O(n) nghĩa lí  thời gian chạy tăng tuyến tính. Dựa tríªn Elo của bạn, tôi gợi ý bắt đầu với O(1), O(n), O(nÂ²) trước khi sang O(log n)." },
   ]);
@@ -1114,7 +1114,7 @@ function Testimonials() {
       avatar: "NMT",
       color: "bg-cyan-500",
       rating: 5,
-      text: "LearnAI thực sự thay đổi cí¡ch tôi học Toí¡n. Trước đí¢y tôi cứ lí m lại những bí i dễ, nhưng giờ hệ thống luôn đẩy tôi ví o đúng ví¹ng thí¡ch thức. Điểm Elo từ 800 líªn 1050 sau 8 tuần!",
+      text: "Nyvora thực sự thay đổi cí¡ch tôi học Toí¡n. Trước đí¢y tôi cứ lí m lại những bí i dễ, nhưng giờ hệ thống luôn đẩy tôi ví o đúng ví¹ng thí¡ch thức. Điểm Elo từ 800 líªn 1050 sau 8 tuần!",
     },
     {
       name: "Trần Thị Lan",
@@ -1213,7 +1213,7 @@ function FAQ() {
       a: "Dashboard cung cấpp đầy đủ: biểu đồ Elo theo thời gian, bản đồ nhiệt thành thạo từng chủ đề, thống kíª session học tập, streak ngí y học liíªn tiếp, ví  so sí¡nh với trung bí¬nh cộng đồng. Bạn có thể export báo cáo PDF để chia sẻ với gií¡o viên hoặc mentor.",
     },
     {
-      q: "LearnAI có miễn phí không?",
+      q: "Nyvora có miễn phí không?",
       a: "Hoí n toí n miễn phí trong giai đoạn beta. Tấpt cả tí­nh năng â€” Elo Rating, Spaced Repetition, Dashboard analytics, AI Tutor ví  toí n bộ ngí¢n hí ng câu hỏi â€” đều được mở không giới hạn cho sinh viên đăng ký.",
     },
   ];
@@ -1365,10 +1365,10 @@ function Footer() {
           <div className="col-span-2 md:col-span-1">
             <div className="flex items-center gap-2.5 mb-4">
               <div className="w-8 h-8 flex items-center justify-center">
-                <img src="/logo.png" alt="LearnAI Logo" className="w-full h-full object-contain" />
+                <img src="/logo.png" alt="Nyvora Logo" className="w-full h-full object-contain" />
               </div>
               <span className="font-bricolage font-extrabold text-lg text-white">
-                Learn<span className="text-cyan-400">AI</span>
+                Nyvora
               </span>
             </div>
             <p className="text-[#7878a0] text-sm leading-relaxed max-w-xs mb-5">
@@ -1404,7 +1404,7 @@ function Footer() {
 
         <div className="pt-6 border-t border-white/5 flex flex-col md:flex-row justify-between gap-3">
           <p className="text-xs text-[#5050780] font-jetbrains">
-            Â© 2024 LearnAI Â· Đề tài Nghiíªn cứu Khoa học Sinh viên
+            Â© 2024 Nyvora Â· Đề tài Nghiíªn cứu Khoa học Sinh viên
           </p>
           <div className="flex gap-5">
             <Link href="/terms" className="text-xs text-[#505070] hover:text-[#9090b8] transition-colors">

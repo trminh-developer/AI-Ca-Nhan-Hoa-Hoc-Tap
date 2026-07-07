@@ -33,7 +33,7 @@ export default function LoginPage() {
       <div className={styles.decorOrb1}></div>
       <div className={styles.decorOrb2}></div>
       <div className={styles.card}>
-        <Link href="/" className={styles.logo}>🧠 LearnAI</Link>
+        <Link href="/" className={styles.logo}>🧠 Nyvora</Link>
         <h1 className={styles.title}>Đăng nhập</h1>
         <p className={styles.subtitle}>Chào mừng bạn trở lại!</p>
 

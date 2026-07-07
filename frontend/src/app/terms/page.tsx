@@ -14,14 +14,14 @@ export default function TermsPage() {
           
           <h2 className="text-xl font-semibold text-white mt-8 mb-4">1. Chấp nhận điều khoản</h2>
           <p>
-            Bằng việc truy cập và sử dụng hệ thống LearnAI, bạn đồng ý bị ràng buộc bởi các điều khoản
+            Bằng việc truy cập và sử dụng hệ thống Nyvora, bạn đồng ý bị ràng buộc bởi các điều khoản
             và điều kiện này. Nếu bạn không đồng ý với bất kỳ phần nào của các điều khoản, bạn không
             thể truy cập hệ thống.
           </p>
 
           <h2 className="text-xl font-semibold text-white mt-8 mb-4">2. Mô tả dịch vụ</h2>
           <p>
-            LearnAI là hệ thống học tập cá nhân hóa sử dụng thuật toán Elo Rating và Spaced Repetition
+            Nyvora là hệ thống học tập cá nhân hóa sử dụng thuật toán Elo Rating và Spaced Repetition
             để tối ưu hóa lộ trình học tập. Dịch vụ được cung cấp &quot;như nguyên trạng&quot; (as is) và &quot;khi có sẵn&quot;.
           </p>
 
@@ -34,7 +34,7 @@ export default function TermsPage() {
 
           <h2 className="text-xl font-semibold text-white mt-8 mb-4">4. Sở hữu trí tuệ</h2>
           <p>
-            Tất cả nội dung, giao diện, và thuật toán trên LearnAI đều thuộc bản quyền của nhóm
+            Tất cả nội dung, giao diện, và thuật toán trên Nyvora đều thuộc bản quyền của nhóm
             Nghiên cứu khoa học sinh viên.
           </p>
         </div>

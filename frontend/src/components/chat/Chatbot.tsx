@@ -14,7 +14,7 @@ interface Message {
 export default function Chatbot() {
   const [isOpen, setIsOpen] = useState(false);
   const [messages, setMessages] = useState<Message[]>([
-    { id: '1', text: 'Chào bạn! Mình là Trợ giảng Ảo LearnAI. Bạn cần giúp gì nào?', sender: 'bot' }
+    { id: '1', text: 'Chào bạn! Mình là Trợ giảng Ảo Nyvora. Bạn cần giúp gì nào?', sender: 'bot' }
   ]);
   const [input, setInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
