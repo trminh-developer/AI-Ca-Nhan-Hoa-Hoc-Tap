@@ -11,9 +11,6 @@ export const metadata: Metadata = {
   title: "Nyvora",
   description: "Nền tảng học tập thích ứng sử dụng AI để cá nhân hóa nội dung theo năng lực người học. Elo Rating, SM-2 Spaced Repetition, Bloom's Taxonomy.",
   keywords: "AI, học tập, cá nhân hóa, adaptive learning, Elo rating, NCKH",
-  icons: {
-    icon: "/logo.png",
-  },
 };
 
 export default function RootLayout({
