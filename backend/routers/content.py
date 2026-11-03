@@ -2,6 +2,8 @@
 Content Router - Quản lý và truy vấn nội dung học tập (Môn học, Chủ đề, Câu hỏi).
 """
 
+import json
+
 from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.orm import Session
 
@@ -68,6 +70,14 @@ def list_topics(subject_id: int, db: Session = Depends(get_db)):
     result = []
     for topic in topics:
         question_count = db.query(Question).filter(Question.topic_id == topic.id).count()
+        raw_prereqs = topic.prerequisites
+        if isinstance(raw_prereqs, str):
+            try:
+                parsed_prereqs = json.loads(raw_prereqs) if raw_prereqs.strip() else []
+            except json.JSONDecodeError:
+                parsed_prereqs = []
+        else:
+            parsed_prereqs = raw_prereqs or []
         result.append(TopicResponse(
             id=topic.id,
             subject_id=topic.subject_id,
@@ -75,7 +85,7 @@ def list_topics(subject_id: int, db: Session = Depends(get_db)):
             description=topic.description,
             bloom_level=topic.bloom_level,
             order_index=topic.order_index,
-            prerequisites=topic.prerequisites or [],
+            prerequisites=parsed_prereqs,
             question_count=question_count,
         ))
     

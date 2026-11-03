@@ -1,4 +1,4 @@
-name: Frontend CI
+name: Frontend & Python 3.14 Backend CI
 
 on:
   push:
@@ -37,23 +37,27 @@ jobs:
         working-directory: ./backend
     strategy:
       matrix:
-        python-version: ["3.10"]
+        python-version: ["3.14"]
     steps:
     - uses: actions/checkout@v4
     - name: Set up Python ${{ matrix.python-version }}
       uses: actions/setup-python@v5
       with:
         python-version: ${{ matrix.python-version }}
+        allow-prereleases: true
         cache: 'pip'
+        cache-dependency-path: './backend/requirements.txt'
+    - name: Verify Python 3.14.x Runtime
+      run: python --version
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
         pip install -r requirements.txt
-        pip install pytest flake8
+        pip install flake8
     - name: Lint with flake8
       run: flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
-    - name: Run tests
-      run: pytest test_api.py || echo "No tests configured yet"
+    - name: Run API & Chatbot Test Suite on Python 3.14.x
+      run: python test_api.py
 
   auto-deploy:
     needs: [frontend-ci, backend-ci]

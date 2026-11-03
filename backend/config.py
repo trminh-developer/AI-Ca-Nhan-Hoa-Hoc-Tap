@@ -6,8 +6,9 @@ Hỗ trợ SQL Server qua pymssql.
 import os
 from dotenv import load_dotenv
 
-# Load biến môi trường từ file .env
-load_dotenv()
+# Load biến môi trường từ file .env trong thư mục backend
+_BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+load_dotenv(os.path.join(_BASE_DIR, ".env"))
 
 # Cấu hình SQL Server (Đang gặp lỗi do SQL Server tắt TCP/IP)
 DB_SERVER = os.getenv("DB_SERVER", "localhost")
@@ -35,8 +36,9 @@ SECRET_KEY = os.getenv(
 ALGORITHM = os.getenv("ALGORITHM", "HS256")
 ACCESS_TOKEN_EXPIRE_MINUTES = int(os.getenv("ACCESS_TOKEN_EXPIRE_MINUTES", "1440"))
 
-# Cấu hình Gemini AI
-GEMINI_API_KEY = os.getenv("GEMINI_API_KEY", "")  # 24 giờ
+# Cấu hình Gemini AI (SDK google-genai tương thích Python 3.14.x)
+GEMINI_API_KEY = os.getenv("GEMINI_API_KEY", "").strip().strip('"').strip("'")
+GEMINI_MODEL = os.getenv("GEMINI_MODEL", "gemini-2.5-flash").strip()
 
 # Cấu hình Elo Rating
 INITIAL_ELO = 1500.0

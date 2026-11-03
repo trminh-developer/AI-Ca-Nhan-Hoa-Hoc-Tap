@@ -63,7 +63,7 @@ def setup_db():
         username="admin",
         email="admin@test.com",
         hashed_password=hash_password("admin123"),
-        is_admin=True,
+        role="admin",
         overall_elo=1500.0,
     )
     db.add(admin)
@@ -165,7 +165,7 @@ def test_auth_register():
         test("Register returns username", data.get("username") == "testuser")
         test("Register returns email", data.get("email") == "test@test.com")
         test("Register returns elo 1500", data.get("overall_elo") == 1500.0)
-        test("Register returns is_admin=false", data.get("is_admin") == False)
+        test("Register returns role=student", data.get("role") == "student")
 
     # Duplicate username
     resp2 = client.post("/api/auth/register", json={
@@ -470,15 +470,15 @@ def test_admin_api():
     if testuser:
         resp4 = client.put(f"/api/admin/users/{testuser.id}/role",
                            headers=auth_header(admin_token),
-                           json={"is_admin": True})
+                           json={"role": "admin"})
         test("PUT /admin/users/{id}/role returns 200", resp4.status_code == 200)
         if resp4.status_code == 200:
-            test("User is now admin", resp4.json().get("is_admin") == True)
+            test("User is now admin", resp4.json().get("role") == "admin")
 
             # Revert
             client.put(f"/api/admin/users/{testuser.id}/role",
                        headers=auth_header(admin_token),
-                       json={"is_admin": False})
+                       json={"role": "student"})
 
     # Without auth
     resp5 = client.get("/api/admin/stats")
@@ -486,16 +486,44 @@ def test_admin_api():
 
 
 def test_chat_api():
-    print("\n📋 [9] Chat API")
+    print("\n📋 [9] Chat API (Python 3.14 Runtime & Adaptive Chatbot)")
+
+    # Runtime check (public)
+    rt_resp = client.get("/api/chat/runtime")
+    test("GET /chat/runtime returns 200", rt_resp.status_code == 200, f"Got {rt_resp.status_code}")
+    if rt_resp.status_code == 200:
+        rt_data = rt_resp.json()
+        test("Chat runtime language is Python", rt_data.get("language") == "Python")
+        test("Chat runtime SDK is google-genai", rt_data.get("sdk") == "google-genai")
+        test("Chat runtime reports python_version", bool(rt_data.get("python_version")))
+
+    # Public demo chat (no auth needed)
+    demo_resp = client.post("/api/chat/demo", json={
+        "message": "O(log n) là gì?",
+        "learner_elo": 950.0,
+    })
+    test("POST /chat/demo returns 200", demo_resp.status_code == 200, f"Got {demo_resp.status_code}: {demo_resp.text}")
+    if demo_resp.status_code == 200:
+        demo_data = demo_resp.json()
+        test("Demo chat has reply", bool(demo_data.get("reply")))
+        test("Demo chat has python_version", bool(demo_data.get("python_version")))
 
     token = get_user_token("testuser", "newpassword123")
 
     resp = client.post("/api/chat/", headers=auth_header(token), json={
-        "message": "Hello",
+        "message": "Giải thích Python 3.14",
     })
     test("POST /chat/ returns 200", resp.status_code == 200, f"Got {resp.status_code}: {resp.text}")
     if resp.status_code == 200:
-        test("Chat has reply field", "reply" in resp.json())
+        chat_data = resp.json()
+        test("Chat has reply field", "reply" in chat_data and len(chat_data["reply"]) > 0)
+        test("Chat has python_version field", "python_version" in chat_data)
+
+    # Chat history
+    hist_resp = client.get("/api/chat/history", headers=auth_header(token))
+    test("GET /chat/history returns 200", hist_resp.status_code == 200)
+    if hist_resp.status_code == 200:
+        test("Chat history recorded user & bot turns", len(hist_resp.json()) >= 2)
 
     # Without auth
     resp2 = client.post("/api/chat/", json={"message": "Hello"})

@@ -5,9 +5,13 @@ services:
     buildCommand: "cd backend && pip install -r requirements.txt"
     startCommand: "cd backend && uvicorn main:app --host 0.0.0.0 --port $PORT"
     envVars:
+      - key: PYTHON_VERSION
+        value: "3.14.0"
       - key: DATABASE_URL
         sync: false # User needs to enter the Supabase URL in Render dashboard
       - key: SECRET_KEY
         generateValue: true
       - key: GEMINI_API_KEY
         sync: false # User needs to enter the Gemini API Key
+      - key: GEMINI_MODEL
+        value: "gemini-2.5-flash"

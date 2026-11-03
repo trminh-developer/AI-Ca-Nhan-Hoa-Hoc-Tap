@@ -8,6 +8,7 @@ Bao gồm:
 - Root endpoint trả về thông tin API
 """
 
+import platform
 import sys
 from contextlib import asynccontextmanager
 
@@ -136,6 +137,8 @@ def root():
             "content": "/api/subjects, /api/topics",
             "learning": "/api/learning",
             "quiz": "/api/quiz",
+            "chat": "/api/chat",
+            "python_runtime": platform.python_version(),
         },
     }
 
