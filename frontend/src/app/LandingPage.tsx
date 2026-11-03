@@ -15,6 +15,7 @@ import {
   ResponsiveContainer, RadarChart, PolarGrid, PolarAngleAxis, Radar
 } from "recharts";
 import * as Accordion from "@radix-ui/react-accordion";
+import { sendDemoMessageToBot, getChatbotRuntime } from "@/lib/api";
 
 /* â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
    HOOKS
@@ -953,28 +954,78 @@ function HowItWorks() {
    AI CHATBOT DEMO
 â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 function AIDemo() {
-  const [messages, setMessages] = useState([
-    { role: "ai" as const, text: "Xin chí o! Tí´i lí  AI Tutor của Nyvora. Hôm nay bạn muốn ôn tập chủ đề ní o? Elo hiện tại của bạn lí  950." },
-    { role: "user" as const, text: "Giải thí­ch cho tôi về Big O notation?" },
-    { role: "ai" as const, text: "Big O notation mí´ tả tốc độ tăng trưởng của thuật toí¡n khi input tăng. Ví­ dụ: O(n) nghĩa lí  thời gian chạy tăng tuyến tính. Dựa tríªn Elo của bạn, tôi gợi ý bắt đầu với O(1), O(n), O(nÂ²) trước khi sang O(log n)." },
+  const [pythonRuntime, setPythonRuntime] = useState("3.14");
+  const [isSending, setIsSending] = useState(false);
+  const [messages, setMessages] = useState<Array<{ role: "ai" | "user"; text: string }>>([
+    {
+      role: "ai",
+      text: "Xin chào! Tôi là AI Tutor của Nyvora (vận hành trên Python 3.14). Hôm nay bạn muốn ôn tập chủ đề nào? Elo hiện tại của bạn là 950.",
+    },
+    { role: "user", text: "Giải thích cho tôi về Big O notation?" },
+    {
+      role: "ai",
+      text: "Big O notation mô tả tốc độ tăng trưởng của thuật toán khi input tăng. Ví dụ: O(n) nghĩa là thời gian chạy tăng tuyến tính. Dựa trên Elo của bạn, tôi gợi ý bắt đầu với O(1), O(n), O(n²) trước khi sang O(log n).",
+    },
   ]);
   const [input, setInput] = useState("");
-  const endRef = useRef<HTMLDivElement>(null);
+  const chatBoxRef = useRef<HTMLDivElement>(null);
 
-  const suggestions = ["O(log n) lí  gí¬?", "Giải thí­ch thuật toí¡n sắp xếp", "Ví­ dụ về O(nÂ²)"];
+  const suggestions = [
+    "Python 3.14 có gì mới?",
+    "O(log n) là gì?",
+    "Giải thích thuật toán sắp xếp",
+    "Ví dụ về O(n²)",
+  ];
 
-  const send = (text: string) => {
-    if (!text.trim()) return;
-    setMessages(m => [...m, { role: "user", text }]);
+  useEffect(() => {
+    getChatbotRuntime()
+      .then((info) => {
+        if (info?.python_version) {
+          setPythonRuntime(info.python_version);
+        }
+      })
+      .catch(() => {
+        // Giữ mặc định Python 3.14 nếu máy chủ chưa bật
+      });
+  }, []);
+
+  const send = async (text: string) => {
+    const trimmed = text.trim();
+    if (!trimmed || isSending) return;
+
+    const historyPayload = messages.slice(-8).map((m) => ({
+      role: m.role === "user" ? "user" : "model",
+      message: m.text,
+    }));
+
+    setMessages((m) => [...m, { role: "user", text: trimmed }]);
     setInput("");
-    setTimeout(() => {
-      setMessages(m => [...m, { role: "ai", text: "Cí¢u hỏi rấpt hay! Dựa tríªn trình độ Elo 950 của bạn, đí¢y lí  giải thí­ch phí¹ hợp nhấpt: " + text.toLowerCase().includes("log") ? "O(log n) xuấpt hiện trong thuật toí¡n Binary Search â€” mỗi bước loại bỏ nửa phần tử, níªn chỉ cần logâ‚‚(n) bước." : "Tí´i sẽ cung cấpp gợi ý phí¹ hợp với trình độ của bạn. Hí£y thử lí m bí i tập nhỏ ní y trước nhí©!" }]);
-    }, 800);
+    setIsSending(true);
+
+    try {
+      const res = await sendDemoMessageToBot(trimmed, 950, historyPayload);
+      if (res.python_version) {
+        setPythonRuntime(res.python_version);
+      }
+      setMessages((m) => [...m, { role: "ai", text: res.reply }]);
+    } catch {
+      const lower = trimmed.toLowerCase();
+      const offlineReply = lower.includes("3.14") || lower.includes("python")
+        ? "Trợ giảng Nyvora được định hướng chạy trên Python 3.14.x (PEP 649 deferred annotations, PEP 750 t-strings, SDK google-genai). Hãy bật Backend FastAPI (cổng 8000) để trò chuyện trực tiếp cùng engine Python 3.14!"
+        : lower.includes("log")
+        ? "Câu hỏi rất hay! O(log n) xuất hiện trong thuật toán Binary Search — mỗi bước loại bỏ một nửa phần tử nên chỉ cần tối đa log₂(n) bước."
+        : "Câu hỏi rất hay! Với trình độ Elo 950 của bạn, hãy chia bài toán thành ví dụ nhỏ trước rồi đánh giá số phép toán lặp lại nhé!";
+      setMessages((m) => [...m, { role: "ai", text: offlineReply }]);
+    } finally {
+      setIsSending(false);
+    }
   };
 
   useEffect(() => {
-    endRef.current?.scrollIntoView({ behavior: "smooth" });
-  }, [messages]);
+    if (chatBoxRef.current) {
+      chatBoxRef.current.scrollTop = chatBoxRef.current.scrollHeight;
+    }
+  }, [messages, isSending]);
 
   return (
     <section className="relative z-10 py-24 px-6">
@@ -989,7 +1040,7 @@ function AIDemo() {
             className="lg:sticky lg:top-24"
           >
             <span className="font-jetbrains text-xs text-orange-400 tracking-[0.2em] uppercase mb-4 block">
-              {"//"} AI Tutor
+              {"//"} AI Tutor · Python {pythonRuntime}
             </span>
             <h2 className="font-bricolage text-4xl md:text-5xl font-extrabold text-white leading-tight mb-6">
               Người hướng dẫn
@@ -1000,13 +1051,13 @@ function AIDemo() {
               của bạn
             </h2>
             <p className="text-[#7878a0] leading-relaxed mb-8 text-sm">
-              Không chỉ trả lời â€” AI Tutor phí¢n tí­ch trình độ Elo, lịch sử học tập ví  đưa ra gợi ý tối ưu cho từng câu hỏi của bạn.
+              Không chỉ trả lời — AI Tutor vận hành trên nền tảng Python {pythonRuntime} phân tích trình độ Elo, lịch sử học tập và đưa ra gợi ý tối ưu cho từng câu hỏi của bạn.
             </p>
             <div className="space-y-4">
               {[
-                { icon: BookOpen, title: "Đí o tạo tríªn tài liệu", desc: "Phí¢n tí­ch sí¡ch gií¡o khoa, slide bí i giảng ví  đề thi" },
-                { icon: Lightbulb, title: "Gợi ý thí­ch ứng", desc: "Hints phí¹ hợp cấp Bloom tương ứng trình độ Elo" },
-                { icon: Globe, title: "Đa ngôn ngữ", desc: "Hỗ trợ tiếng Việt ví  tiếng Anh tự nhiíªn" },
+                { icon: BookOpen, title: "Đào tạo trên tài liệu", desc: "Phân tích sách giáo khoa, slide bài giảng và đề thi" },
+                { icon: Lightbulb, title: "Gợi ý thích ứng", desc: "Hints phù hợp cấp Bloom tương ứng trình độ Elo" },
+                { icon: Globe, title: "Backend Python 3.14.x", desc: "Tích hợp trực tiếp API FastAPI & Google GenAI SDK mới nhất" },
               ].map(({ icon: Icon, title, desc }) => (
                 <div key={title} className="flex items-start gap-3">
                   <div className="w-8 h-8 rounded-lg bg-orange-500/10 border border-orange-400/15 flex items-center justify-center flex-shrink-0 mt-0.5">
@@ -1035,7 +1086,7 @@ function AIDemo() {
                 <Brain className="w-4 h-4 text-white" />
               </div>
               <div className="flex-1">
-                <div className="text-sm font-semibold text-white">AI Tutor Â· Lập Trình</div>
+                <div className="text-sm font-semibold text-white">AI Tutor · Python {pythonRuntime}</div>
                 <div className="text-xs text-[#7878a0] font-jetbrains">Elo bạn: <span className="text-cyan-400">950</span></div>
               </div>
               <div className="flex items-center gap-1.5 text-xs text-emerald-400 font-medium">
@@ -1045,7 +1096,7 @@ function AIDemo() {
             </div>
 
             {/* Messages */}
-            <div className="p-5 space-y-4 h-72 overflow-y-auto scrollbar-thin">
+            <div ref={chatBoxRef} className="p-5 space-y-4 h-72 overflow-y-auto scrollbar-thin">
               {messages.map((m, i) => (
                 <div key={i} className={`flex gap-2.5 ${m.role === "user" ? "flex-row-reverse" : ""}`}>
                   {m.role === "ai" && (
@@ -1064,7 +1115,16 @@ function AIDemo() {
                   </div>
                 </div>
               ))}
-              <div ref={endRef} />
+              {isSending && (
+                <div className="flex gap-2.5">
+                  <div className="w-7 h-7 rounded-full bg-gradient-to-br from-orange-400 to-rose-500 flex items-center justify-center flex-shrink-0">
+                    <Brain className="w-3.5 h-3.5 text-white" />
+                  </div>
+                  <div className="px-3.5 py-2.5 rounded-xl text-xs bg-[#14142a] text-[#9090b8] border border-white/5 rounded-tl-sm">
+                    Đang xử lý trên Python {pythonRuntime}...
+                  </div>
+                </div>
+              )}
             </div>
 
             {/* Suggestions */}
@@ -1072,8 +1132,10 @@ function AIDemo() {
               {suggestions.map((s) => (
                 <button
                   key={s}
-                  onClick={() => send(s)}
-                  className="flex-shrink-0 text-xs px-3 py-1.5 rounded-full border border-white/8 bg-white/3 text-[#9090b8] hover:border-orange-400/30 hover:text-orange-200 transition-colors"
+                  type="button"
+                  disabled={isSending}
+                  onClick={() => void send(s)}
+                  className="flex-shrink-0 text-xs px-3 py-1.5 rounded-full border border-white/8 bg-white/3 text-[#9090b8] hover:border-orange-400/30 hover:text-orange-200 transition-colors disabled:opacity-50"
                 >
                   {s}
                 </button>
@@ -1084,14 +1146,17 @@ function AIDemo() {
             <div className="px-4 py-4 border-t border-white/5 flex gap-3">
               <input
                 value={input}
+                disabled={isSending}
                 onChange={(e) => setInput(e.target.value)}
-                onKeyDown={(e) => e.key === "Enter" && send(input)}
-                placeholder="Hỏi AI Tutor bấpt cứ điều gí¬..."
+                onKeyDown={(e) => e.key === "Enter" && void send(input)}
+                placeholder="Hỏi AI Tutor bất cứ điều gì..."
                 className="flex-1 bg-[#14142a] border border-white/6 rounded-xl px-4 py-2.5 text-sm text-[#e0e0f0] placeholder:text-[#5050780] outline-none focus:border-orange-400/30 transition-colors"
               />
               <button
-                onClick={() => send(input)}
-                className="w-10 h-10 rounded-xl bg-gradient-to-br from-orange-500 to-rose-500 flex items-center justify-center flex-shrink-0 hover:from-orange-400 hover:to-rose-400 transition-colors shadow-[0_0_16px_rgba(249,115,22,0.3)]"
+                type="button"
+                disabled={isSending || !input.trim()}
+                onClick={() => void send(input)}
+                className="w-10 h-10 rounded-xl bg-gradient-to-br from-orange-500 to-rose-500 flex items-center justify-center flex-shrink-0 hover:from-orange-400 hover:to-rose-400 transition-colors shadow-[0_0_16px_rgba(249,115,22,0.3)] disabled:opacity-50"
               >
                 <Send className="w-4 h-4 text-white" />
               </button>
@@ -1103,34 +1168,34 @@ function AIDemo() {
   );
 }
 
-/* â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+/* ─────────────────────────────────────────
    TESTIMONIALS
-â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+───────────────────────────────────────── */
 function Testimonials() {
   const reviews = [
     {
-      name: "Nguyễn Minh Tuấpn",
-      role: "Sinh viên năm 3 Â· CNTT",
+      name: "Nguyễn Minh Tuấn",
+      role: "Sinh viên năm 3 · CNTT",
       avatar: "NMT",
       color: "bg-cyan-500",
       rating: 5,
-      text: "Nyvora thực sự thay đổi cí¡ch tôi học Toí¡n. Trước đí¢y tôi cứ lí m lại những bí i dễ, nhưng giờ hệ thống luôn đẩy tôi ví o đúng ví¹ng thí¡ch thức. Điểm Elo từ 800 líªn 1050 sau 8 tuần!",
+      text: "Nyvora thực sự thay đổi cách tôi học Toán. Trước đây tôi cứ làm lại những bài dễ, nhưng giờ hệ thống luôn đẩy tôi vào đúng vùng thách thức. Điểm Elo từ 800 lên 1050 sau 8 tuần!",
     },
     {
       name: "Trần Thị Lan",
-      role: "Sinh viên năm 2 Â· Khoa học máy tính",
+      role: "Sinh viên năm 2 · Khoa học máy tính",
       avatar: "TTL",
       color: "bg-violet-500",
       rating: 5,
-      text: "AI Tutor giải thí­ch rấpt tự nhiíªn, không chỉ đưa đáp í¡n mí  cí²n hỏi ngược lại để tôi suy nghĩ. Tí´i thí­ch nhấpt lí  ní³ biết trình độ của mình ví  không giải thí­ch quí¡ đơn giản hay quí¡ khí³.",
+      text: "AI Tutor giải thích rất tự nhiên, không chỉ đưa đáp án mà còn hỏi ngược lại để tôi suy nghĩ. Tôi thích nhất là nó biết trình độ của mình và không giải thích quá đơn giản hay quá khó.",
     },
     {
-      name: "Líª Hoí ng Phíºc",
-      role: "Sinh viên năm 4 Â· Kỹ thuật phần mềm",
+      name: "Lê Hoàng Phúc",
+      role: "Sinh viên năm 4 · Kỹ thuật phần mềm",
       avatar: "LHP",
       color: "bg-emerald-500",
       rating: 5,
-      text: "Dashboard rấpt trực quan, tôi thấpy ríµ mình yếu chủ đề ní o ví  cần ôn bí i gí¬. Spaced Repetition thực sự hiệu quả â€” tôi không cí²n quíªn bí i ngay sau khi học nữa.",
+      text: "Dashboard rất trực quan, tôi thấy rõ mình yếu chủ đề nào và cần ôn bài gì. Spaced Repetition thực sự hiệu quả — tôi không còn quên bài ngay sau khi học nữa.",
     },
   ];
 
@@ -1144,7 +1209,7 @@ function Testimonials() {
           className="mb-16 text-center"
         >
           <span className="font-jetbrains text-xs text-emerald-400 tracking-[0.2em] uppercase mb-3 block">
-            {"//"} Cộng đồng nói gí¬
+            {"//"} Cộng đồng nói gì
           </span>
           <h2 className="font-bricolage text-4xl md:text-5xl font-extrabold text-white">
             Học viên{" "}

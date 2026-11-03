@@ -147,12 +147,49 @@ export async function startQuiz(topicId: number, numQuestions: number = 10) {
   });
 }
 
-/* ══════════════ CHATBOT ══════════════ */
+/* ══════════════ CHATBOT (PYTHON 3.14.x BACKEND) ══════════════ */
 
-export async function sendMessageToBot(message: string) {
-  return apiRequest<{ reply: string }>('/chat/', {
+export interface ChatbotRuntimeInfo {
+  service: string;
+  language: string;
+  python_version: string;
+  python_series: string;
+  sdk: string;
+  model: string;
+  ai_configured: boolean;
+}
+
+export interface ChatbotReply {
+  reply: string;
+  python_version?: string;
+  engine?: string;
+}
+
+export async function getChatbotRuntime() {
+  return apiRequest<ChatbotRuntimeInfo>('/chat/runtime');
+}
+
+export async function sendMessageToBot(message: string, customToken?: string | null) {
+  return apiRequest<ChatbotReply>('/chat/', {
     method: 'POST',
     body: { message },
+    customToken,
+  });
+}
+
+export async function sendDemoMessageToBot(
+  message: string,
+  learnerElo: number = 950,
+  history: Array<{ role: string; message: string }> = [],
+) {
+  return apiRequest<ChatbotReply>('/chat/demo', {
+    method: 'POST',
+    body: {
+      message,
+      learner_elo: learnerElo,
+      history,
+    },
+    customToken: null,
   });
 }
 
@@ -163,8 +200,8 @@ export interface ChatHistoryItem {
   created_at: string;
 }
 
-export async function getChatHistory() {
-  return apiRequest<ChatHistoryItem[]>('/chat/history');
+export async function getChatHistory(customToken?: string | null) {
+  return apiRequest<ChatHistoryItem[]>('/chat/history', { customToken });
 }
 
 /* ══════════════ ADMIN ══════════════ */
