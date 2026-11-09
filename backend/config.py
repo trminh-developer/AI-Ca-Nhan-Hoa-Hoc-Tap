@@ -1,55 +1,41 @@
 """
-Cấu hình ứng dụng - Quản lý các biến môi trường và cài đặt hệ thống.
-Hỗ trợ SQL Server qua pymssql.
+Root Config Compatibility Layer - Re-exports from `app.core.config`.
 """
 
-import os
-from dotenv import load_dotenv
-
-# Load biến môi trường từ file .env trong thư mục backend
-_BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-load_dotenv(os.path.join(_BASE_DIR, ".env"))
-
-# Cấu hình SQL Server (Đang gặp lỗi do SQL Server tắt TCP/IP)
-DB_SERVER = os.getenv("DB_SERVER", "localhost")
-DB_NAME = os.getenv("DB_NAME", "AdaptiveLearningDB")
-DB_USER = os.getenv("DB_USER", "")
-DB_PASSWORD = os.getenv("DB_PASSWORD", "")
-
-# Database Connection
-DATABASE_URL = os.getenv("DATABASE_URL")
-if DATABASE_URL:
-    DATABASE_URL = DATABASE_URL.strip().strip('"').strip("'")
-    if DATABASE_URL.startswith("postgres://"):
-        DATABASE_URL = DATABASE_URL.replace("postgres://", "postgresql://", 1)
-
-if not DATABASE_URL:
-    # Fallback if .env is missing
-    base_dir = os.path.dirname(os.path.abspath(__file__))
-    DATABASE_URL = f"sqlite:///{os.path.join(base_dir, 'adaptive_learning.db')}"
-
-# Cấu hình JWT Authentication
-SECRET_KEY = os.getenv(
-    "SECRET_KEY",
-    "nckh-adaptive-learning-secret-key-change-in-production-2024"
+from app.core.config import (
+    ACCESS_TOKEN_EXPIRE_MINUTES,
+    ALGORITHM,
+    ALLOWED_ORIGINS,
+    DATABASE_URL,
+    DEFAULT_EASINESS_FACTOR,
+    DEFAULT_ELO,
+    GEMINI_API_KEY,
+    GEMINI_FALLBACK_MODELS,
+    GEMINI_MODEL,
+    K_FACTOR_ITEM,
+    K_FACTOR_LEARNER,
+    MIN_EASINESS_FACTOR,
+    REFRESH_TOKEN_EXPIRE_DAYS,
+    SECRET_KEY,
+    Settings,
+    settings,
 )
-ALGORITHM = os.getenv("ALGORITHM", "HS256")
-ACCESS_TOKEN_EXPIRE_MINUTES = int(os.getenv("ACCESS_TOKEN_EXPIRE_MINUTES", "1440"))
 
-# Cấu hình Gemini AI (SDK google-genai tương thích Python 3.14.x)
-GEMINI_API_KEY = os.getenv("GEMINI_API_KEY", "").strip().strip('"').strip("'")
-GEMINI_MODEL = os.getenv("GEMINI_MODEL", "gemini-2.5-flash").strip()
-
-# Cấu hình Elo Rating
-INITIAL_ELO = 1500.0
-K_FACTOR = 32  # Hệ số K cho thuật toán Elo
-
-# Cấu hình CORS
-ALLOWED_ORIGINS = [
-    "http://localhost:3000",
-    "http://127.0.0.1:3000",
-    "http://localhost:5173",
-    "http://127.0.0.1:5173",
-    "https://trminh-learningai.vercel.app",
-    "https://learningai-f6l8eae4m-trminh-developers-projects.vercel.app",
+__all__ = [
+    "Settings",
+    "settings",
+    "DATABASE_URL",
+    "SECRET_KEY",
+    "ALGORITHM",
+    "ACCESS_TOKEN_EXPIRE_MINUTES",
+    "REFRESH_TOKEN_EXPIRE_DAYS",
+    "DEFAULT_ELO",
+    "K_FACTOR_LEARNER",
+    "K_FACTOR_ITEM",
+    "DEFAULT_EASINESS_FACTOR",
+    "MIN_EASINESS_FACTOR",
+    "ALLOWED_ORIGINS",
+    "GEMINI_API_KEY",
+    "GEMINI_MODEL",
+    "GEMINI_FALLBACK_MODELS",
 ]

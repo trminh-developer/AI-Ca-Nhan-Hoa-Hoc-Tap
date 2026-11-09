@@ -1,3 +1,3 @@
-"""
-Package Schemas - Export tất cả Pydantic schemas.
-"""
+"""Re-export schemas from `app.schemas`."""
+
+from app.schemas import *  # noqa: F401, F403
