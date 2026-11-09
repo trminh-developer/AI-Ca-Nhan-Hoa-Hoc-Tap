@@ -6,7 +6,10 @@ import {
   sendDemoMessageToBot,
   getChatHistory,
   getChatbotRuntime,
+  getStoredAccessToken,
 } from '@/lib/api';
+import { useAuth } from '@/context/AuthContext';
+import MathText from '@/components/ui/MathText';
 import styles from './chatbot.module.css';
 
 interface Message {
@@ -16,12 +19,13 @@ interface Message {
 }
 
 export default function Chatbot() {
+  const { user } = useAuth();
   const [isOpen, setIsOpen] = useState(false);
-  const [pythonVersion, setPythonVersion] = useState('3.14');
+  const [pythonVersion, setPythonVersion] = useState('3.14.0');
   const [messages, setMessages] = useState<Message[]>([
     {
       id: '1',
-      text: 'Chào bạn! Mình là Trợ giảng Ảo Nyvora (vận hành trên Python 3.14). Bạn cần mình hỗ trợ bài học nào hôm nay?',
+      text: 'Chào bạn! Mình là **Trợ giảng Socratic AI Nyvora** (vận hành trên **Python 3.14** & `google-genai`). Mình sẽ gợi mở tư duy từng bước theo điểm Elo của bạn. Bạn đang thắc mắc bài toán hay đoạn code nào?',
       sender: 'bot',
     },
   ]);
@@ -30,6 +34,14 @@ export default function Chatbot() {
 
   const hasLoadedHistoryRef = useRef(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
+
+  const learnerElo = user?.overall_elo ?? 1200;
+  const socraticTier =
+    learnerElo < 1200
+      ? 'Cơ bản (Scaffolding)'
+      : learnerElo <= 1800
+      ? 'Trung cấp (Socratic)'
+      : 'Chuyên sâu (Hàn lâm)';
 
   useEffect(() => {
     if (!isOpen) return;
@@ -41,13 +53,10 @@ export default function Chatbot() {
         }
       })
       .catch(() => {
-        // Giữ nhãn mặc định Python 3.14 nếu Backend chưa bật
+        // Giữ nhãn mặc định Python 3.14.0
       });
 
-    const activeToken =
-      typeof window !== 'undefined'
-        ? localStorage.getItem('token') || localStorage.getItem('admin_token')
-        : null;
+    const activeToken = getStoredAccessToken();
 
     if (activeToken && !hasLoadedHistoryRef.current) {
       hasLoadedHistoryRef.current = true;
@@ -63,7 +72,7 @@ export default function Chatbot() {
           }
         })
         .catch(() => {
-          // Không ghi đè tin nhắn chào mừng nếu phiên đăng nhập hết hạn
+          // Giữ tin nhắn chào mừng nếu chưa có lịch sử
         });
     }
   }, [isOpen]);
@@ -77,7 +86,7 @@ export default function Chatbot() {
     if (!input.trim() || isLoading) return;
 
     const userText = input.trim();
-    const recentHistory = messages.slice(-8).map((m) => ({
+    const recentHistory = messages.slice(-10).map((m) => ({
       role: m.sender === 'user' ? 'user' : 'model',
       message: m.text,
     }));
@@ -90,14 +99,11 @@ export default function Chatbot() {
     setIsLoading(true);
 
     try {
-      const activeToken =
-        typeof window !== 'undefined'
-          ? localStorage.getItem('token') || localStorage.getItem('admin_token')
-          : null;
+      const activeToken = getStoredAccessToken();
 
       const res = activeToken
         ? await sendMessageToBot(userText, activeToken)
-        : await sendDemoMessageToBot(userText, 1200, recentHistory);
+        : await sendDemoMessageToBot(userText, learnerElo, recentHistory);
 
       if (res.python_version) {
         setPythonVersion(res.python_version);
@@ -112,7 +118,7 @@ export default function Chatbot() {
         ...prev,
         {
           id: (Date.now() + 1).toString(),
-          text: '⚠️ Không thể kết nối tới máy chủ Chatbot Python 3.14. Vui lòng kiểm tra Backend FastAPI (cổng 8000) đã khởi chạy chưa nhé!',
+          text: '⚠️ Không thể kết nối tới máy chủ Socratic AI Python 3.14. Vui lòng kiểm tra Backend FastAPI (cổng 8000) đã khởi chạy chưa nhé!',
           sender: 'bot',
         },
       ]);
@@ -127,8 +133,10 @@ export default function Chatbot() {
         <div className={styles.chatWindow}>
           <div className={styles.header}>
             <div className={styles.headerInfo}>
-              <h3 className={styles.title}>🧠 Trợ giảng AI</h3>
-              <span className={styles.runtimeBadge}>🐍 Python {pythonVersion}</span>
+              <h3 className={styles.title}>🧠 Socratic AI Tutor</h3>
+              <span className={styles.runtimeBadge}>
+                🐍 Py {pythonVersion} • {socraticTier}
+              </span>
             </div>
             <button
               type="button"
@@ -148,7 +156,7 @@ export default function Chatbot() {
                   msg.sender === 'user' ? styles.userMessage : styles.botMessage
                 }`}
               >
-                {msg.text}
+                <MathText content={msg.text} block />
               </div>
             ))}
 
@@ -166,7 +174,7 @@ export default function Chatbot() {
             <input
               type="text"
               className={styles.input}
-              placeholder="Hỏi Trợ giảng AI (Python 3.14)..."
+              placeholder={`Hỏi Socratic Tutor (Elo ${Math.round(learnerElo)})...`}
               value={input}
               onChange={(e) => setInput(e.target.value)}
               disabled={isLoading}
@@ -188,7 +196,7 @@ export default function Chatbot() {
           type="button"
           className={styles.floatingBtn}
           onClick={() => setIsOpen(true)}
-          aria-label="Mở Trợ giảng AI Python 3.14"
+          aria-label="Mở Trợ giảng Socratic AI Python 3.14"
         >
           💬
         </button>
