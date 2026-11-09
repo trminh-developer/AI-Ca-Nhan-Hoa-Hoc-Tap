@@ -16,10 +16,11 @@ import {
 } from "recharts";
 import * as Accordion from "@radix-ui/react-accordion";
 import { sendDemoMessageToBot, getChatbotRuntime } from "@/lib/api";
+import MathText from "@/components/ui/MathText";
 
-/* â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+/* ─────────────────────────────────────────
    HOOKS
-â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+───────────────────────────────────────── */
 function useCounter(end: number, duration: number, active: boolean) {
   const [val, setVal] = useState(0);
   useEffect(() => {
@@ -58,9 +59,9 @@ function useTypewriter(words: string[], speed = 80, pause = 2000) {
   return words[idx].slice(0, char);
 }
 
-/* â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+/* ─────────────────────────────────────────
    BACKGROUND
-â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+───────────────────────────────────────── */
 function KineticBackground() {
   return (
     <div className="fixed inset-0 pointer-events-none overflow-hidden z-0">
@@ -98,9 +99,9 @@ function KineticBackground() {
   );
 }
 
-/* â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+/* ─────────────────────────────────────────
    NAV
-â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+───────────────────────────────────────── */
 function Nav({ scrolled }: { scrolled: boolean }) {
   const [open, setOpen] = useState(false);
   const router = useRouter();
@@ -108,6 +109,7 @@ function Nav({ scrolled }: { scrolled: boolean }) {
     { label: "Tính năng", href: "#features" },
     { label: "Dashboard", href: "#dashboard" },
     { label: "Môn học", href: "#subjects" },
+    { label: "AI Tutor", href: "#ai-demo" },
     { label: "FAQ", href: "#faq" },
   ];
 
@@ -168,7 +170,10 @@ function Nav({ scrolled }: { scrolled: boolean }) {
               {l.label}
             </a>
           ))}
-          <button onClick={() => router.push('/register')} className="text-sm font-semibold px-5 py-3 rounded-xl bg-gradient-to-r from-cyan-500 to-cyan-400 text-[#06060e] mt-1">
+          <button onClick={() => router.push('/login')} className="text-sm font-medium px-5 py-2.5 rounded-xl border border-white/10 text-white">
+            Đăng nhập
+          </button>
+          <button onClick={() => router.push('/register')} className="text-sm font-semibold px-5 py-3 rounded-xl bg-gradient-to-r from-cyan-500 to-cyan-400 text-[#06060e]">
             Bắt đầu miễn phí
           </button>
         </motion.div>
@@ -177,9 +182,9 @@ function Nav({ scrolled }: { scrolled: boolean }) {
   );
 }
 
-/* â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+/* ─────────────────────────────────────────
    HERO
-â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+───────────────────────────────────────── */
 function Hero() {
   const typed = useTypewriter(["Elo Rating", "Spaced Repetition", "AI Chatbot", "Bloom Taxonomy"], 75, 2200);
   const router = useRouter();
@@ -222,7 +227,7 @@ function Hero() {
           className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-cyan-500/28 bg-cyan-500/7 text-cyan-300 text-xs font-semibold mb-8 backdrop-blur-md"
         >
           <Sparkles className="w-3.5 h-3.5 animate-pulse" />
-          Nghiên cứu Khoa học Sinh viên · 2024
+          Nghiên cứu Khoa học Sinh viên · Nyvora Adaptive Engine
           <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse ml-1" />
         </motion.div>
 
@@ -249,7 +254,7 @@ function Hero() {
           transition={{ duration: 0.7, delay: 0.22 }}
           className="text-[#8080a8] text-lg md:text-xl max-w-2xl mx-auto leading-relaxed mb-10"
         >
-          Hệ thống học tập thế hệ mới â€” cá nhân hóa từng câu hỏi, từng lịch ôn, từng gợi ý. Được xí¢y dựng dựa tríªn khoa học nhận thức ví  trí­ tuệ nhí¢n tạo.
+          Hệ thống học tập thế hệ mới — cá nhân hóa từng câu hỏi, từng lịch ôn, từng gợi ý. Được xây dựng dựa trên khoa học nhận thức và trí tuệ nhân tạo.
         </motion.p>
 
         {/* CTA */}
@@ -259,7 +264,7 @@ function Hero() {
           transition={{ duration: 0.7, delay: 0.32 }}
           className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-16"
         >
-          <button 
+          <button
             onClick={() => router.push('/register')}
             className="group flex items-center gap-2 px-8 py-4 rounded-xl bg-gradient-to-r from-cyan-500 to-cyan-400 text-[#06060e] font-semibold text-base hover:from-cyan-400 hover:to-cyan-300 transition-all duration-200 shadow-[0_0_32px_rgba(34,211,238,0.38)] hover:shadow-[0_0_48px_rgba(34,211,238,0.6)]"
           >
@@ -267,10 +272,13 @@ function Hero() {
             Bắt đầu học ngay
             <ArrowRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
           </button>
-          <button className="group flex items-center gap-2 px-8 py-4 rounded-xl border border-white/10 bg-white/3 text-[#e0e0f0] font-medium text-base hover:border-cyan-500/30 hover:text-cyan-200 hover:bg-white/5 transition-all duration-200 backdrop-blur-sm">
+          <a
+            href="#ai-demo"
+            className="group flex items-center gap-2 px-8 py-4 rounded-xl border border-white/10 bg-white/3 text-[#e0e0f0] font-medium text-base hover:border-cyan-500/30 hover:text-cyan-200 hover:bg-white/5 transition-all duration-200 backdrop-blur-sm"
+          >
             <Play className="w-4 h-4" />
-            Xem demo
-          </button>
+            Xem demo AI Tutor
+          </a>
         </motion.div>
 
         {/* Mini stat pills */}
@@ -282,7 +290,7 @@ function Hero() {
         >
           {[
             { icon: Users, val: "500+", label: "sinh viên" },
-            { icon: BookOpen, val: "60+", label: "câu hỏi" },
+            { icon: BookOpen, val: "120+", label: "câu hỏi chuẩn NCKH" },
             { icon: Award, val: "6", label: "cấp Bloom" },
             { icon: Shield, val: "100%", label: "miễn phí" },
           ].map(({ icon: Icon, val, label }, i) => (
@@ -310,16 +318,16 @@ function Hero() {
   );
 }
 
-/* â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+/* ─────────────────────────────────────────
    MARQUEE TICKER
-â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+───────────────────────────────────────── */
 function Ticker() {
   const items = [
-    "Elo Rating", "Spaced Repetition", "SM-2 Algorithm",
-    "Bloom Taxonomy", "AI Tutor", "Adaptive Learning",
+    "Dual Elo Rating", "Spaced Repetition", "SM-2 Algorithm",
+    "Bloom Taxonomy", "Socratic AI Tutor", "Adaptive Learning",
     "Cognitive Science", "Zone of Proximal Development",
     "Personalized Education", "Real-time Analytics",
-    "Học Lập Trình", "Toán Cao Cấp", "Vật Lý Đại Cương",
+    "Lập Trình Python", "Toán Học & Tư Duy Định Lượng", "Tiếng Anh Học Thuật",
   ];
   const doubled = [...items, ...items];
   return (
@@ -340,9 +348,9 @@ function Ticker() {
   );
 }
 
-/* â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+/* ─────────────────────────────────────────
    STATS + ELO CHART
-â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+───────────────────────────────────────── */
 const eloData = [
   { week: "T1", elo: 820 },
   { week: "T2", elo: 855 },
@@ -362,7 +370,7 @@ function Stats() {
   const ref = useRef(null);
   const inView = useInView(ref, { once: true, margin: "-80px" });
   const s = useCounter(3, 1400, inView);
-  const q = useCounter(60, 1700, inView);
+  const q = useCounter(120, 1700, inView);
   const b = useCounter(6, 1200, inView);
   const p = useCounter(500, 1900, inView);
 
@@ -390,7 +398,7 @@ function Stats() {
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
           {[
             { val: s, suffix: "+", label: "Môn học", sub: "& mở rộng", color: "text-cyan-400", glow: "rgba(34,211,238,0.08)" },
-            { val: q, suffix: "+", label: "Cí¢u hỏi", sub: "đa cấp độ", color: "text-violet-400", glow: "rgba(124,58,237,0.08)" },
+            { val: q, suffix: "+", label: "Câu hỏi", sub: "đa cấp độ", color: "text-violet-400", glow: "rgba(124,58,237,0.08)" },
             { val: b, suffix: "", label: "Cấp Bloom", sub: "taxonomy", color: "text-emerald-400", glow: "rgba(16,185,129,0.08)" },
             { val: p, suffix: "+", label: "Sinh viên", sub: "đang học", color: "text-orange-400", glow: "rgba(249,115,22,0.08)" },
           ].map(({ val, suffix, label, sub, color, glow }, i) => (
@@ -426,7 +434,7 @@ function Stats() {
                 <TrendingUp className="w-4 h-4 text-cyan-400" />
                 <span className="text-white font-semibold">Elo Rating theo thời gian</span>
               </div>
-              <p className="text-[#7878a0] text-xs font-jetbrains">Học viên điển hình â€¢ 12 tuần</p>
+              <p className="text-[#7878a0] text-xs font-jetbrains">Học viên điển hình · 12 tuần</p>
             </div>
             <div className="flex items-center gap-4">
               <div className="text-right">
@@ -467,9 +475,9 @@ function Stats() {
   );
 }
 
-/* â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+/* ─────────────────────────────────────────
    FEATURES
-â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+───────────────────────────────────────── */
 const MiniSparkline = ({ data, color }: { data: number[]; color: string }) => {
   const max = Math.max(...data);
   const min = Math.min(...data);
@@ -494,13 +502,13 @@ function Features() {
       icon: Target,
       label: "Elo Rating",
       title: "Elo Rating Thích Ứng",
-      tagline: "Luôn trong vùng thách thức tối ưu",
-      desc: "Hệ thống Elo Rating liíªn tục hiệu chỉnh độ khí³ câu hỏi dựa tríªn mỗi câu trả lời của bạn. Mục tiêu duy trì trong vùng 70â€“85% tỷ lệ đúng â€” đí¢y lí  ví¹ng học tập hiệu quả nhấpt theo nghiên cứu khoa học nhận thức.",
+      tagline: "Luôn trong vùng thách thức tối ưu (ZPD)",
+      desc: "Hệ thống Dual Elo Rating liên tục hiệu chỉnh năng lực học viên và độ khó câu hỏi dựa trên mỗi lượt tương tác. Mục tiêu duy trì xác suất thành công trong vùng phát triển gần nhất (60% – 75%) — vùng học tập đạt trạng thái Flow tối ưu nhất theo nghiên cứu khoa học nhận thức.",
       bullets: [
         "Hiệu chỉnh real-time sau mỗi câu trả lời",
-        "So sí¡nh với chuẩn học tập toí n hệ thống",
-        "Phí¢n tí­ch xu hướng tiến bộ theo tuần",
-        "Cảnh báo khi rơi vào vùng thoải mái",
+        "So sánh với chuẩn học tập toàn hệ thống",
+        "Phân tích xu hướng tiến bộ theo tuần",
+        "Cảnh báo khi rơi vào vùng quá dễ hoặc quá tải",
       ],
       color: "from-cyan-500/12 to-blue-600/12",
       border: "border-cyan-500/22",
@@ -515,13 +523,13 @@ function Features() {
       icon: Clock,
       label: "SM-2",
       title: "Spaced Repetition SM-2",
-      tagline: "Chiến thắng đường cong quíªn lí£ng",
-      desc: "Thuật toán SuperMemo SM-2 tí­nh toí¡n thời điểm tối ưu để ôn lại kiến thức, dựa tríªn đường cong quíªn lí£ng Ebbinghaus cí¡ nhí¢n của bạn. Học í­t hơn, nhớ lí¢u hơn.",
+      tagline: "Chiến thắng đường cong quên lãng",
+      desc: "Thuật toán SuperMemo SM-2 tính toán thời điểm tối ưu để ôn lại kiến thức dựa trên chất lượng phản hồi, thời gian suy nghĩ và đường cong quên lãng Ebbinghaus cá nhân của bạn. Học ít hơn, nhớ lâu hơn.",
       bullets: [
-        "Lịch ôn cá nhân hóa tự động",
-        "6 hệ số dễ theo từng nội dung",
-        "Tí­ch hợp với Elo để ưu tiíªn điểm yếu",
-        "Thống kê retention rate từng tuần",
+        "Lịch ôn tập cá nhân hóa tự động",
+        "Hệ số dễ (Easiness Factor) thích ứng theo từng thẻ",
+        "Tích hợp với Elo để ưu tiên chủ đề yếu",
+        "Thống kê tỷ lệ duy trì trí nhớ từng tuần",
       ],
       color: "from-violet-500/12 to-purple-600/12",
       border: "border-violet-500/22",
@@ -536,13 +544,13 @@ function Features() {
       icon: BarChart3,
       label: "Dashboard",
       title: "Analytics Dashboard",
-      tagline: "Dữ liệu học tập toí n diện",
-      desc: "Bảng điều khiển thời gian thực hiển thị đầy đủ hành trình học tập: xếp hạng Elo, bản đồ thành thạo chủ đề, streak ngí y học, ví  phí¢n tí­ch session chi tiết.",
+      tagline: "Dữ liệu học tập toàn diện",
+      desc: "Bảng điều khiển thời gian thực hiển thị đầy đủ hành trình học tập: biến thiên Elo qua từng lượt trả lời, biểu đồ Radar 6 cấp độ nhận thức Bloom, streak ngày học và danh sách thẻ ôn tập đến hạn.",
       bullets: [
         "Biểu đồ Elo theo thời gian thực",
-        "Bản đồ nhiệt thành thạo chủ đề",
-        "Streak ví  milestone gamification",
-        "Export báo cáo PDF cí¡ nhí¢n",
+        "Biểu đồ Radar 6 cấp độ nhận thức Bloom",
+        "Streak và milestone gamification",
+        "Theo dõi tiến độ chuyên sâu từng chủ đề",
       ],
       color: "from-emerald-500/12 to-teal-600/12",
       border: "border-emerald-500/22",
@@ -556,14 +564,14 @@ function Features() {
     {
       icon: MessageSquare,
       label: "AI Tutor",
-      title: "AI Tutor Cí¡ Nhí¢n",
-      tagline: "Trợ lý thông minh 24/7",
-      desc: "Chatbot AI được đào tạo tríªn tài liệu khí³a học, có thể giải thí­ch khí¡i niệm, gợi ý lộ trình học, ví  cung cấpp hints phí¹ hợp đúng với trình độ Elo hiện tại của bạn.",
+      title: "AI Tutor Socratic Cá Nhân",
+      tagline: "Trợ giảng thông minh 24/7",
+      desc: "Trợ giảng AI vận hành theo phương pháp vấn đáp Socratic trên nền tảng Python 3.14, tự động điều chỉnh ngôn ngữ giải thích và câu hỏi gợi mở phù hợp với điểm Elo hiện tại của bạn.",
       bullets: [
-        "Trả lời dựa tríªn tài liệu khí³a học",
-        "Hints thí­ch ứng theo cấp Bloom",
-        "Giải thí­ch nhiều cí¡ch cho một khí¡i niệm",
-        "Lịch sử hội thoại lưu trữ đầy đủ",
+        "Phương pháp gợi mở Socratic không giải hộ",
+        "Hints thích ứng theo cấp độ Bloom & Elo",
+        "Hỗ trợ hiển thị công thức Toán LaTeX & Code",
+        "Lưu trữ trọn vẹn lịch sử hội thoại cá nhân",
       ],
       color: "from-orange-500/12 to-rose-600/12",
       border: "border-orange-500/22",
@@ -599,7 +607,7 @@ function Features() {
               </span>
             </h2>
             <p className="text-[#7878a0] text-sm max-w-xs leading-relaxed">
-              Bốn trụ cột được xí¢y dựng tríªn nền tảng nghiên cứu nhận thức học ví  khoa học dữ liệu.
+              Bốn trụ cột được xây dựng trên nền tảng nghiên cứu nhận thức học và khoa học dữ liệu.
             </p>
           </div>
         </motion.div>
@@ -679,28 +687,30 @@ function Features() {
   );
 }
 
-/* â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+/* ─────────────────────────────────────────
    SUBJECTS
-â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+───────────────────────────────────────── */
 const radarData = [
-  { subject: "Cơ bản", A: 90, B: 60, C: 75 },
-  { subject: "Ứng dụng", A: 78, B: 85, C: 55 },
-  { subject: "Phí¢n tí­ch", A: 65, B: 72, C: 88 },
-  { subject: "Tổng hợp", A: 70, B: 58, C: 80 },
-  { subject: "Đí¡nh gií¡", A: 55, B: 90, C: 65 },
+  { subject: "Nhớ (Remember)", A: 92, B: 85, C: 88 },
+  { subject: "Hiểu (Understand)", A: 84, B: 80, C: 78 },
+  { subject: "Áp dụng (Apply)", A: 78, B: 85, C: 72 },
+  { subject: "Phân tích (Analyze)", A: 68, B: 74, C: 82 },
+  { subject: "Đánh giá (Evaluate)", A: 62, B: 78, C: 69 },
+  { subject: "Sáng tạo (Create)", A: 58, B: 65, C: 75 },
 ];
 
 function Subjects() {
+  const router = useRouter();
   const subjects = [
     {
       icon: Code2,
-      name: "Lập Trình",
+      name: "Lập Trình Python",
       code: "CS101",
-      desc: "Thuật toán, cấu trúc dữ liệu, lập trình hướng đối tượng ví  giải quyết vấpn đề thực tế.",
-      topics: ["Thuật toán", "OOP", "Data Structures", "Complexity"],
-      elo: 950,
-      maxElo: 1200,
-      questions: 24,
+      desc: "Biến & Kiểu dữ liệu, Cấu trúc điều khiển, Hàm & Đệ quy, Cấu trúc dữ liệu & Độ phức tạp thuật toán.",
+      topics: ["Variables & Types", "Loops", "Recursion", "Big-O & Data Structures"],
+      elo: 1450,
+      maxElo: 2000,
+      questions: 40,
       color: "text-cyan-400",
       border: "border-cyan-500/20",
       bg: "bg-cyan-500/8",
@@ -709,13 +719,13 @@ function Subjects() {
     },
     {
       icon: Calculator,
-      name: "Toán Cao Cấp",
+      name: "Toán Học & Tư Duy Định Lượng",
       code: "MATH201",
-      desc: "Giải tích, đại số tuyến tính, xí¡c suấpt thống kíª ví  ứng dụng trong khoa học máy tính.",
-      topics: ["Giải tích", "Ma trận", "Xác suất", "Thống kê"],
-      elo: 1080,
-      maxElo: 1200,
-      questions: 22,
+      desc: "Đại số & Phương trình, Giải tích & Đạo hàm, Xác suất & Thống kê, Tối ưu hóa & Mô hình toán học.",
+      topics: ["Đại số", "Giải tích", "Xác suất Bayes", "Tối ưu hóa"],
+      elo: 1520,
+      maxElo: 2000,
+      questions: 40,
       color: "text-violet-400",
       border: "border-violet-500/20",
       bg: "bg-violet-500/8",
@@ -724,13 +734,13 @@ function Subjects() {
     },
     {
       icon: AtomIcon,
-      name: "Vật Lý Đại Cương",
-      code: "PHY101",
-      desc: "Cơ học cổ điển, điện từ học, quang học ví  nhiệt động lực học với bài toán thực tế.",
-      topics: ["Cơ học", "Điện từ", "Quang học", "Nhiệt học"],
-      elo: 820,
-      maxElo: 1200,
-      questions: 18,
+      name: "Tiếng Anh Học Thuật & Công Nghệ",
+      code: "ENG301",
+      desc: "Từ vựng CNTT & AI, Ngữ pháp học thuật, Đọc hiểu báo cáo khoa học (Abstract/Paper) và Viết luận học thuật.",
+      topics: ["Tech Vocabulary", "Academic Grammar", "Paper Reading", "Academic Writing"],
+      elo: 1380,
+      maxElo: 2000,
+      questions: 40,
       color: "text-emerald-400",
       border: "border-emerald-500/20",
       bg: "bg-emerald-500/8",
@@ -755,12 +765,12 @@ function Subjects() {
             <h2 className="font-bricolage text-4xl md:text-5xl font-extrabold text-white leading-tight">
               Ba môn học,{" "}
               <span className="bg-gradient-to-r from-violet-300 to-emerald-400 bg-clip-text text-transparent">
-                vô hạn câu hỏi
+                120+ câu hỏi chuẩn NCKH
               </span>
             </h2>
           </div>
           <p className="text-[#7878a0] text-sm max-w-xs leading-relaxed">
-            Mỗi môn học được chia thành cí¡c chủ đề nhỏ với độ khí³ riíªng biệt, đảm bảo học tập toí n diện.
+            Mỗi môn học được chia thành các chủ đề nhỏ theo thang nhận thức Bloom với độ khó Elo riêng biệt, đảm bảo học tập toàn diện.
           </p>
         </motion.div>
 
@@ -768,6 +778,7 @@ function Subjects() {
           {subjects.map(({ icon: Icon, name, code, desc, topics, elo, maxElo, questions, color, border, bg, glow, bar }, i) => (
             <motion.div
               key={i}
+              onClick={() => router.push('/dashboard')}
               initial={{ opacity: 0, y: 28 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
@@ -815,7 +826,7 @@ function Subjects() {
           ))}
         </div>
 
-        {/* Radar chart: thành thạo so sí¡nh */}
+        {/* Radar chart: thành thạo so sánh */}
         <motion.div
           initial={{ opacity: 0, y: 24 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -828,13 +839,13 @@ function Subjects() {
                 Thành thạo theo cấp Bloom
               </h3>
               <p className="text-[#7878a0] text-sm leading-relaxed mb-5">
-                So sí¡nh mức độ thành thạo của ba môn học tríªn thang đo 6 cấpp độ nhận thức.
+                So sánh mức độ thành thạo của ba môn học trên thang đo 6 cấp độ nhận thức Bloom.
               </p>
               <div className="space-y-2">
                 {[
-                  { label: "Lập Trình", color: "#22d3ee" },
-                  { label: "Toán Cao Cấp", color: "#7c3aed" },
-                  { label: "Vật Lý", color: "#10b981" },
+                  { label: "Lập Trình Python", color: "#22d3ee" },
+                  { label: "Toán Học & Định Lượng", color: "#7c3aed" },
+                  { label: "Tiếng Anh Học Thuật", color: "#10b981" },
                 ].map(({ label, color }) => (
                   <div key={label} className="flex items-center gap-2">
                     <div className="w-3 h-1 rounded-full" style={{ backgroundColor: color }} />
@@ -848,9 +859,9 @@ function Subjects() {
                 <RadarChart data={radarData}>
                   <PolarGrid stroke="rgba(255,255,255,0.06)" />
                   <PolarAngleAxis dataKey="subject" tick={{ fill: "#7878a0", fontSize: 11 }} />
-                  <Radar name="Lập Trình" dataKey="A" stroke="#22d3ee" fill="#22d3ee" fillOpacity={0.12} strokeWidth={1.5} />
-                  <Radar name="Toí¡n" dataKey="B" stroke="#7c3aed" fill="#7c3aed" fillOpacity={0.12} strokeWidth={1.5} />
-                  <Radar name="Vật Lý" dataKey="C" stroke="#10b981" fill="#10b981" fillOpacity={0.12} strokeWidth={1.5} />
+                  <Radar name="Lập Trình Python" dataKey="A" stroke="#22d3ee" fill="#22d3ee" fillOpacity={0.12} strokeWidth={1.5} />
+                  <Radar name="Toán Học" dataKey="B" stroke="#7c3aed" fill="#7c3aed" fillOpacity={0.12} strokeWidth={1.5} />
+                  <Radar name="Tiếng Anh Học Thuật" dataKey="C" stroke="#10b981" fill="#10b981" fillOpacity={0.12} strokeWidth={1.5} />
                 </RadarChart>
               </ResponsiveContainer>
             </div>
@@ -861,33 +872,33 @@ function Subjects() {
   );
 }
 
-/* â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+/* ─────────────────────────────────────────
    HOW IT WORKS
-â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+───────────────────────────────────────── */
 function HowItWorks() {
   const steps = [
     {
       num: "01", icon: Brain, color: "text-cyan-400", bg: "bg-cyan-400/10", border: "border-cyan-400/20",
-      title: "Đí¡nh gií¡ năng lực ban đầu",
-      desc: "Hoí n thành bí i kiểm tra đầu ví o thí­ch ứng gồm 20 câu hỏi. Hệ thống Elo phí¢n tí­ch pattern ví  xí¡c định trình độ xuấpt phí¡t chí­nh xí¡c cho từng chủ đề.",
-      detail: "~10 phíºt",
+      title: "Đánh giá năng lực ban đầu",
+      desc: "Hoàn thành bài kiểm tra đầu vào thích ứng. Hệ thống Dual Elo phân tích phản hồi và xác định trình độ xuất phát chính xác cho từng chủ đề.",
+      detail: "~10 phút",
     },
     {
       num: "02", icon: Cpu, color: "text-violet-400", bg: "bg-violet-400/10", border: "border-violet-400/20",
-      title: "AI xí¢y dựng bản đồ tri thức",
-      desc: "Thuật toán phí¢n tí­ch điểm mạnh, điểm yếu, ví  xí¢y dựng đồ thị tri thức cí¡ nhí¢n. Mỗi concept được gắn Elo riíªng ví  lịch ôn SM-2.",
+      title: "AI xây dựng bản đồ tri thức",
+      desc: "Thuật toán phân tích điểm mạnh, điểm yếu và xây dựng đồ thị tri thức cá nhân. Mỗi chủ đề được gắn Elo riêng và lịch ôn tập SM-2.",
       detail: "Tự động",
     },
     {
       num: "03", icon: Target, color: "text-emerald-400", bg: "bg-emerald-400/10", border: "border-emerald-400/20",
-      title: "Học theo lộ trình cí¡ nhí¢n",
-      desc: "Nhận câu hỏi ví  tài liệu được điều chỉnh liíªn tục. AI tutor đồng hành giải đáp thắc mắc. Elo cập nhật sau mỗi câu trả lời.",
-      detail: "Liíªn tục",
+      title: "Học theo lộ trình cá nhân (ZPD)",
+      desc: "Nhận câu hỏi trong vùng phát triển gần nhất (60% – 75% xác suất đúng). Trợ giảng AI Socratic đồng hành gợi mở tư duy sau mỗi câu trả lời.",
+      detail: "Liên tục",
     },
     {
       num: "04", icon: TrendingUp, color: "text-orange-400", bg: "bg-orange-400/10", border: "border-orange-400/20",
-      title: "Theo díµi ví  tối ưu tiến bộ",
-      desc: "Dashboard thời gian thực hiển thị tiến bộ, điểm thành thạo, ví  so sí¡nh với cộng đồng. Hệ thống tự điều chỉnh thuật toí¡n khi phí¡t hiện plateau.",
+      title: "Theo dõi và tối ưu tiến bộ",
+      desc: "Dashboard thời gian thực hiển thị biến thiên Elo, điểm thành thạo 6 cấp Bloom và tự động mở khóa cấp độ nhận thức mới khi đạt chuẩn 70%.",
       detail: "Real-time",
     },
   ];
@@ -950,9 +961,9 @@ function HowItWorks() {
   );
 }
 
-/* â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+/* ─────────────────────────────────────────
    AI CHATBOT DEMO
-â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+───────────────────────────────────────── */
 function AIDemo() {
   const [pythonRuntime, setPythonRuntime] = useState("3.14");
   const [isSending, setIsSending] = useState(false);
@@ -964,7 +975,7 @@ function AIDemo() {
     { role: "user", text: "Giải thích cho tôi về Big O notation?" },
     {
       role: "ai",
-      text: "Big O notation mô tả tốc độ tăng trưởng của thuật toán khi input tăng. Ví dụ: O(n) nghĩa là thời gian chạy tăng tuyến tính. Dựa trên Elo của bạn, tôi gợi ý bắt đầu với O(1), O(n), O(n²) trước khi sang O(log n).",
+      text: "Big O notation mô tả tốc độ tăng trưởng số phép toán của thuật toán khi kích thước dữ liệu đầu vào $n$ tăng lên. Ví dụ: $O(n)$ nghĩa là thời gian chạy tăng tuyến tính. Dựa trên Elo 950 của bạn, tôi gợi ý bắt đầu với $O(1)$, $O(n)$, $O(n^2)$ trước khi sang $O(\\log n)$.",
     },
   ]);
   const [input, setInput] = useState("");
@@ -1011,10 +1022,12 @@ function AIDemo() {
     } catch {
       const lower = trimmed.toLowerCase();
       const offlineReply = lower.includes("3.14") || lower.includes("python")
-        ? "Trợ giảng Nyvora được định hướng chạy trên Python 3.14.x (PEP 649 deferred annotations, PEP 750 t-strings, SDK google-genai). Hãy bật Backend FastAPI (cổng 8000) để trò chuyện trực tiếp cùng engine Python 3.14!"
+        ? "Trợ giảng Nyvora vận hành trên Python 3.14.x (PEP 649 deferred annotations, PEP 750 t-strings, SDK `google-genai`). Theo bạn, việc trì hoãn đánh giá annotation giúp cải thiện tốc độ khởi động của ứng dụng lớn như thế nào?"
         : lower.includes("log")
-        ? "Câu hỏi rất hay! O(log n) xuất hiện trong thuật toán Binary Search — mỗi bước loại bỏ một nửa phần tử nên chỉ cần tối đa log₂(n) bước."
-        : "Câu hỏi rất hay! Với trình độ Elo 950 của bạn, hãy chia bài toán thành ví dụ nhỏ trước rồi đánh giá số phép toán lặp lại nhé!";
+        ? "Câu hỏi rất hay! Độ phức tạp $O(\\log n)$ xuất hiện trong thuật toán Tìm kiếm nhị phân (Binary Search) — mỗi bước loại bỏ một nửa số phần tử nên chỉ cần tối đa $\\log_2(n)$ bước. Nếu danh sách có $1024$ phần tử đã sắp xếp, bạn cần tối đa bao nhiêu lần so sánh?"
+        : lower.includes("n²") || lower.includes("n^2")
+        ? "Độ phức tạp $O(n^2)$ thường xuất hiện khi có 2 vòng lặp lồng nhau duyệt qua $n$ phần tử (ví dụ Bubble Sort). Nếu $n = 100$, số phép toán xấp xỉ $100^2 = 10\\,000$. Theo bạn, điều gì xảy ra nếu ta thay vòng lặp trong bằng phép tra cứu `dict` $O(1)$?"
+        : "Câu hỏi rất thú vị! Với trình độ Elo 950 của bạn, hãy thử chia bài toán thành ví dụ nhỏ với $n = 3$ phần tử trước, rồi đếm số bước lặp lại nhé!";
       setMessages((m) => [...m, { role: "ai", text: offlineReply }]);
     } finally {
       setIsSending(false);
@@ -1028,7 +1041,7 @@ function AIDemo() {
   }, [messages, isSending]);
 
   return (
-    <section className="relative z-10 py-24 px-6">
+    <section id="ai-demo" className="relative z-10 py-24 px-6">
       <div className="max-w-7xl mx-auto">
         <div className="grid lg:grid-cols-[1fr_480px] gap-12 items-start">
           {/* Left */}
@@ -1051,13 +1064,13 @@ function AIDemo() {
               của bạn
             </h2>
             <p className="text-[#7878a0] leading-relaxed mb-8 text-sm">
-              Không chỉ trả lời — AI Tutor vận hành trên nền tảng Python {pythonRuntime} phân tích trình độ Elo, lịch sử học tập và đưa ra gợi ý tối ưu cho từng câu hỏi của bạn.
+              Không chỉ trả lời — AI Tutor vận hành trên nền tảng Python {pythonRuntime} phân tích trình độ Elo, lịch sử học tập và đưa ra gợi ý Socratic tối ưu cho từng câu hỏi của bạn.
             </p>
             <div className="space-y-4">
               {[
-                { icon: BookOpen, title: "Đào tạo trên tài liệu", desc: "Phân tích sách giáo khoa, slide bài giảng và đề thi" },
-                { icon: Lightbulb, title: "Gợi ý thích ứng", desc: "Hints phù hợp cấp Bloom tương ứng trình độ Elo" },
-                { icon: Globe, title: "Backend Python 3.14.x", desc: "Tích hợp trực tiếp API FastAPI & Google GenAI SDK mới nhất" },
+                { icon: BookOpen, title: "Đào tạo trên tài liệu chuẩn", desc: "Phân tích giáo trình, cấu trúc thuật toán và ngân hàng đề NCKH" },
+                { icon: Lightbulb, title: "Gợi mở Socratic thích ứng", desc: "Hints phù hợp cấp độ Bloom tương ứng với trình độ Elo của bạn" },
+                { icon: Globe, title: "Backend Python 3.14.x", desc: "Tích hợp trực tiếp FastAPI & Google GenAI SDK mới nhất" },
               ].map(({ icon: Icon, title, desc }) => (
                 <div key={title} className="flex items-start gap-3">
                   <div className="w-8 h-8 rounded-lg bg-orange-500/10 border border-orange-400/15 flex items-center justify-center flex-shrink-0 mt-0.5">
@@ -1086,7 +1099,7 @@ function AIDemo() {
                 <Brain className="w-4 h-4 text-white" />
               </div>
               <div className="flex-1">
-                <div className="text-sm font-semibold text-white">AI Tutor · Python {pythonRuntime}</div>
+                <div className="text-sm font-semibold text-white">AI Tutor · Lập Trình (Python {pythonRuntime})</div>
                 <div className="text-xs text-[#7878a0] font-jetbrains">Elo bạn: <span className="text-cyan-400">950</span></div>
               </div>
               <div className="flex items-center gap-1.5 text-xs text-emerald-400 font-medium">
@@ -1111,7 +1124,7 @@ function AIDemo() {
                         : "bg-[#14142a] text-[#c0c0d8] border border-white/5 rounded-tl-sm"
                     }`}
                   >
-                    {m.text}
+                    <MathText content={m.text} />
                   </div>
                 </div>
               ))}
@@ -1150,7 +1163,7 @@ function AIDemo() {
                 onChange={(e) => setInput(e.target.value)}
                 onKeyDown={(e) => e.key === "Enter" && void send(input)}
                 placeholder="Hỏi AI Tutor bất cứ điều gì..."
-                className="flex-1 bg-[#14142a] border border-white/6 rounded-xl px-4 py-2.5 text-sm text-[#e0e0f0] placeholder:text-[#5050780] outline-none focus:border-orange-400/30 transition-colors"
+                className="flex-1 bg-[#14142a] border border-white/6 rounded-xl px-4 py-2.5 text-sm text-[#e0e0f0] placeholder:text-[#505078] outline-none focus:border-orange-400/30 transition-colors"
               />
               <button
                 type="button"
@@ -1179,7 +1192,7 @@ function Testimonials() {
       avatar: "NMT",
       color: "bg-cyan-500",
       rating: 5,
-      text: "Nyvora thực sự thay đổi cách tôi học Toán. Trước đây tôi cứ làm lại những bài dễ, nhưng giờ hệ thống luôn đẩy tôi vào đúng vùng thách thức. Điểm Elo từ 800 lên 1050 sau 8 tuần!",
+      text: "Nyvora thực sự thay đổi cách tôi học Toán và Lập trình. Trước đây tôi cứ làm lại những bài dễ, nhưng giờ hệ thống luôn đẩy tôi vào đúng vùng thách thức ZPD. Điểm Elo từ 800 lên 1050 sau 8 tuần!",
     },
     {
       name: "Trần Thị Lan",
@@ -1187,7 +1200,7 @@ function Testimonials() {
       avatar: "TTL",
       color: "bg-violet-500",
       rating: 5,
-      text: "AI Tutor giải thích rất tự nhiên, không chỉ đưa đáp án mà còn hỏi ngược lại để tôi suy nghĩ. Tôi thích nhất là nó biết trình độ của mình và không giải thích quá đơn giản hay quá khó.",
+      text: "AI Tutor giải thích rất tự nhiên, không chỉ đưa đáp án mà còn hỏi ngược lại theo phương pháp Socratic để tôi tự suy nghĩ. Tôi thích nhất là hệ thống hiểu rõ trình độ của mình và không giải thích quá đơn giản hay quá khó.",
     },
     {
       name: "Lê Hoàng Phúc",
@@ -1195,7 +1208,7 @@ function Testimonials() {
       avatar: "LHP",
       color: "bg-emerald-500",
       rating: 5,
-      text: "Dashboard rất trực quan, tôi thấy rõ mình yếu chủ đề nào và cần ôn bài gì. Spaced Repetition thực sự hiệu quả — tôi không còn quên bài ngay sau khi học nữa.",
+      text: "Dashboard rất trực quan, tôi thấy rõ mình yếu chủ đề nào và cần ôn bài gì. Thuật toán Spaced Repetition SM-2 thực sự hiệu quả — tôi không còn quên kiến thức ngay sau khi học nữa.",
     },
   ];
 
@@ -1252,34 +1265,34 @@ function Testimonials() {
   );
 }
 
-/* â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+/* ─────────────────────────────────────────
    FAQ
-â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+───────────────────────────────────────── */
 function FAQ() {
   const faqs = [
     {
-      q: "Hệ thống Elo Rating hoạt động như thế ní o?",
-      a: "Mỗi câu hỏi ví  mỗi học viên đều có Elo rating riíªng. Khi bạn trả lời đúng câu khí³, Elo của bạn tăng nhiều; trả lời sai câu dễ, Elo giảm í­t. Hệ thống chọn câu hỏi sao cho tỷ lệ đúng của bạn dao động trong ví¹ng 70â€“85% â€” điểm tối ưu cho học tập theo nghiên cứu khoa học nhận thức.",
+      q: "Hệ thống Dual Elo Rating hoạt động như thế nào?",
+      a: "Mỗi câu hỏi và mỗi học viên đều có chỉ số Elo riêng. Khi bạn trả lời đúng câu hỏi khó, Elo của bạn tăng mạnh; khi trả lời sai câu dễ, Elo giảm tương ứng. Hệ thống chọn câu hỏi sao cho xác suất trả lời đúng nằm trong vùng phát triển gần nhất (ZPD: 60% – 75%) — vùng tối ưu cho việc học tập theo nghiên cứu khoa học nhận thức.",
     },
     {
-      q: "SM-2 Spaced Repetition khí¡c gí¬ so với học bí¬nh thường?",
-      a: "Học bí¬nh thường bạn ôn đều đặn mỗi ngí y, không phí¢n biệt bí i ní o đí£ thuộc hay chưa. SM-2 tí­nh toí¡n khoảng cí¡ch tối ưu giữa cí¡c lần ôn dựa tríªn mức độ ghi nhớ của bạn â€” bí i đí£ thuộc sẽ ôn sau 1 tuần, bí i chưa thuộc ôn sau 1 ngí y. Kết quả lí  học í­t hơn 40% thời gian mí  nhớ lí¢u hơn gấpp đí´i.",
+      q: "SM-2 Spaced Repetition khác gì so với cách ôn tập bình thường?",
+      a: "Khi học truyền thống, bạn thường ôn tập dàn trải mà không phân biệt nội dung nào đã nhớ kỹ hay sắp quên. Thuật toán SuperMemo-2 (SM-2) tính toán khoảng cách ngày ôn tập tối ưu dựa trên chất lượng phản hồi và thời gian trả lời — câu đã nắm vững sẽ giãn lịch ôn sau 6 ngày, 15 ngày..., trong khi câu vừa sai sẽ được lên lịch ôn lại sau 1 ngày.",
     },
     {
-      q: "AI Tutor được đào tạo tríªn dữ liệu gí¬?",
-      a: "AI Tutor được fine-tune tríªn tài liệu từng khí³a học: sí¡ch gií¡o khoa, slide bí i giảng, đề thi cũ ví  bí i tập mẫu. Khi trả lời, ní³ cũng tham chiếu Elo rating hiện tại của bạn để điều chỉnh độ phức tạp của giải thí­ch â€” không quí¡ đơn giản, không quí¡ khí³.",
+      q: "AI Tutor được tích hợp phương pháp Socratic như thế nào?",
+      a: "Thay vì đưa ngay đáp án làm giảm khả năng tự tư duy, Trợ giảng AI của Nyvora (chạy trên Python 3.14 và Google GenAI SDK) sử dụng phương pháp vấn đáp Socratic: phân tích lỗi sai, đưa ra ẩn dụ trực quan hoặc gợi ý từng bước phù hợp với mức Elo hiện tại để dẫn dắt bạn tự tìm ra lời giải.",
     },
     {
-      q: "Bloom Taxonomy được tí­ch hợp như thế ní o?",
-      a: "Mỗi câu hỏi được phí¢n loại theo 6 cấpp độ nhận thức của Bloom: Nhớ, Hiểu, Ứng dụng, Phí¢n tí­ch, Đí¡nh gií¡, Sí¡ng tạo. Hệ thống không chỉ đảm bảo bạn nhớ kiến thức, mí  cí²n phí¡t triển khả năng ứng dụng ví  tư duy phíª phí¡n â€” điều mí  học vẹt không lí m được.",
+      q: "Thang đo nhận thức Bloom Taxonomy được áp dụng ra sao?",
+      a: "Mọi chủ đề và câu hỏi đều được chuẩn hóa theo 6 cấp độ nhận thức của Bloom: Nhớ (Remember), Hiểu (Understand), Áp dụng (Apply), Phân tích (Analyze), Đánh giá (Evaluate) và Sáng tạo (Create). Học viên cần đạt độ thành thạo tối thiểu 70% ở cấp độ hiện tại để mở khóa nội dung ở cấp độ tư duy cao hơn.",
     },
     {
-      q: "Tí´i có thể xem tiến bộ của mình như thế ní o?",
-      a: "Dashboard cung cấpp đầy đủ: biểu đồ Elo theo thời gian, bản đồ nhiệt thành thạo từng chủ đề, thống kíª session học tập, streak ngí y học liíªn tiếp, ví  so sí¡nh với trung bí¬nh cộng đồng. Bạn có thể export báo cáo PDF để chia sẻ với gií¡o viên hoặc mentor.",
+      q: "Tôi có thể theo dõi tiến bộ của mình ở đâu?",
+      a: "Trang Dashboard cung cấp trực quan biểu đồ biến thiên Elo theo thời gian thực, biểu đồ Radar 6 cấp độ nhận thức Bloom, danh sách thẻ Flashcard SM-2 đến hạn ôn tập và tỷ lệ thành thạo chi tiết cho từng chủ đề.",
     },
     {
       q: "Nyvora có miễn phí không?",
-      a: "Hoí n toí n miễn phí trong giai đoạn beta. Tấpt cả tí­nh năng â€” Elo Rating, Spaced Repetition, Dashboard analytics, AI Tutor ví  toí n bộ ngí¢n hí ng câu hỏi â€” đều được mở không giới hạn cho sinh viên đăng ký.",
+      a: "Hoàn toàn miễn phí cho sinh viên và giảng viên phục vụ học tập và nghiên cứu khoa học. Tất cả tính năng — Kiểm tra thích ứng ZPD, Ôn tập ngắt quãng SM-2, Dashboard phân tích và Socratic AI Tutor — đều được mở đầy đủ.",
     },
   ];
 
@@ -1293,12 +1306,12 @@ function FAQ() {
           className="mb-12 text-center"
         >
           <span className="font-jetbrains text-xs text-cyan-400 tracking-[0.2em] uppercase mb-3 block">
-            {"//"} Cí¢u hỏi thường gặp
+            {"//"} Câu hỏi thường gặp
           </span>
           <h2 className="font-bricolage text-4xl md:text-5xl font-extrabold text-white">
-            Cí³ thắc mắc?{" "}
+            Có thắc mắc?{" "}
             <span className="bg-gradient-to-r from-cyan-300 to-violet-400 bg-clip-text text-transparent">
-              Chíºng tôi giải đáp
+              Chúng tôi giải đáp
             </span>
           </h2>
         </motion.div>
@@ -1340,9 +1353,9 @@ function FAQ() {
   );
 }
 
-/* â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+/* ─────────────────────────────────────────
    CTA
-â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+───────────────────────────────────────── */
 function CTA() {
   const router = useRouter();
   return (
@@ -1380,24 +1393,30 @@ function CTA() {
               </span>
             </h2>
             <p className="text-[#8080a8] text-lg mb-10 max-w-xl mx-auto leading-relaxed">
-              Tham gia cùng 500+ sinh viên đang trải nghiệm học tập cá nhân hóa thực sự. Hoí n toí n miễn phí â€” không cần thẻ tí­n dụng.
+              Tham gia cùng 500+ sinh viên đang trải nghiệm học tập cá nhân hóa thực sự. Hoàn toàn miễn phí — không cần thẻ tín dụng.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center mb-10">
-              <button className="group flex items-center justify-center gap-2 px-8 py-4 rounded-xl bg-gradient-to-r from-cyan-500 to-cyan-400 text-[#06060e] font-semibold text-base hover:from-cyan-400 hover:to-cyan-300 transition-all duration-200 shadow-[0_0_40px_rgba(34,211,238,0.4)] hover:shadow-[0_0_56px_rgba(34,211,238,0.62)]">
+              <button
+                onClick={() => router.push('/register')}
+                className="group flex items-center justify-center gap-2 px-8 py-4 rounded-xl bg-gradient-to-r from-cyan-500 to-cyan-400 text-[#06060e] font-semibold text-base hover:from-cyan-400 hover:to-cyan-300 transition-all duration-200 shadow-[0_0_40px_rgba(34,211,238,0.4)] hover:shadow-[0_0_56px_rgba(34,211,238,0.62)]"
+              >
                 <Zap className="w-4 h-4" />
                 Đăng ký miễn phí
                 <ArrowRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
               </button>
-              <button className="flex items-center justify-center gap-2 px-8 py-4 rounded-xl border border-white/12 text-[#e0e0f0] font-medium hover:border-violet-400/30 hover:text-violet-200 hover:bg-violet-500/5 transition-all duration-200">
+              <a
+                href="#ai-demo"
+                className="flex items-center justify-center gap-2 px-8 py-4 rounded-xl border border-white/12 text-[#e0e0f0] font-medium hover:border-violet-400/30 hover:text-violet-200 hover:bg-violet-500/5 transition-all duration-200"
+              >
                 <RotateCcw className="w-4 h-4" />
                 Xem lại demo
-              </button>
+              </a>
             </div>
             <div className="flex flex-wrap justify-center gap-6 text-sm text-[#7878a0]">
               {[
-                { icon: Shield, text: "Miễn phí­ 100%" },
+                { icon: Shield, text: "Miễn phí 100%" },
                 { icon: Users, text: "500+ sinh viên" },
-                { icon: Award, text: "Đề tài NCKH 2024" },
+                { icon: Award, text: "Đề tài NCKH Sinh viên" },
               ].map(({ icon: Icon, text }) => (
                 <div key={text} className="flex items-center gap-2">
                   <Icon className="w-4 h-4 text-cyan-400" />
@@ -1412,14 +1431,29 @@ function CTA() {
   );
 }
 
-/* â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+/* ─────────────────────────────────────────
    FOOTER
-â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+───────────────────────────────────────── */
 function Footer() {
   const links = {
-    "Sản phẩm": ["Tính năng", "Dashboard", "AI Tutor", "Môn học"],
-    "Nghiíªn cứu": ["Elo Rating", "Spaced Repetition", "Bloom Taxonomy", "Cognition"],
-    "Liíªn hệ": ["Về dự í¡n", "Đội ngũ", "GitHub", "Bí¡o lỗi"],
+    "Sản phẩm": [
+      { label: "Tính năng", href: "#features" },
+      { label: "Dashboard", href: "#dashboard" },
+      { label: "AI Tutor", href: "#ai-demo" },
+      { label: "Môn học", href: "#subjects" },
+    ],
+    "Nghiên cứu": [
+      { label: "Dual Elo Rating", href: "#features" },
+      { label: "Spaced Repetition SM-2", href: "#features" },
+      { label: "Bloom Taxonomy", href: "#subjects" },
+      { label: "Vùng ZPD", href: "#faq" },
+    ],
+    "Hệ thống": [
+      { label: "Đăng nhập", href: "/login" },
+      { label: "Đăng ký", href: "/register" },
+      { label: "Bảng điều khiển", href: "/dashboard" },
+      { label: "Quản trị & Giảng viên", href: "/admin" },
+    ],
   };
 
   return (
@@ -1437,11 +1471,11 @@ function Footer() {
               </span>
             </div>
             <p className="text-[#7878a0] text-sm leading-relaxed max-w-xs mb-5">
-              Học tập cá nhân hóa thực sự, được xí¢y dựng tríªn nền tảng khoa học nhận thức ví  trí­ tuệ nhí¢n tạo.
+              Học tập cá nhân hóa thực sự, được xây dựng trên nền tảng khoa học nhận thức và trí tuệ nhân tạo.
             </p>
             <div className="flex gap-3">
               {["Gh", "Fb", "Em"].map((s) => (
-                <a key={s} href="#" className="w-8 h-8 rounded-lg border border-white/8 bg-white/3 flex items-center justify-center text-xs text-[#7878a0] hover:border-cyan-400/30 hover:text-cyan-300 transition-colors font-jetbrains">
+                <a key={s} href="#features" className="w-8 h-8 rounded-lg border border-white/8 bg-white/3 flex items-center justify-center text-xs text-[#7878a0] hover:border-cyan-400/30 hover:text-cyan-300 transition-colors font-jetbrains">
                   {s}
                 </a>
               ))}
@@ -1456,9 +1490,9 @@ function Footer() {
               </div>
               <ul className="space-y-2.5">
                 {items.map((item) => (
-                  <li key={item}>
-                    <a href="#" className="text-sm text-[#7878a0] hover:text-cyan-300 transition-colors">
-                      {item}
+                  <li key={item.label}>
+                    <a href={item.href} className="text-sm text-[#7878a0] hover:text-cyan-300 transition-colors">
+                      {item.label}
                     </a>
                   </li>
                 ))}
@@ -1468,8 +1502,8 @@ function Footer() {
         </div>
 
         <div className="pt-6 border-t border-white/5 flex flex-col md:flex-row justify-between gap-3">
-          <p className="text-xs text-[#5050780] font-jetbrains">
-            Â© 2024 Nyvora Â· Đề tài Nghiíªn cứu Khoa học Sinh viên
+          <p className="text-xs text-[#505078] font-jetbrains">
+            © 2026 Nyvora · Đề tài Nghiên cứu Khoa học Sinh viên
           </p>
           <div className="flex gap-5">
             <Link href="/terms" className="text-xs text-[#505070] hover:text-[#9090b8] transition-colors">
@@ -1488,9 +1522,9 @@ function Footer() {
   );
 }
 
-/* â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+/* ─────────────────────────────────────────
    ROOT
-â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+───────────────────────────────────────── */
 export default function App() {
   const [scrolled, setScrolled] = useState(false);
 
@@ -1521,4 +1555,3 @@ export default function App() {
     </div>
   );
 }
-

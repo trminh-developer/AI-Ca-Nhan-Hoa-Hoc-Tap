@@ -7,7 +7,11 @@ import datetime
 import platform
 import sys
 
-from apscheduler.schedulers.background import BackgroundScheduler
+try:
+    from apscheduler.schedulers.background import BackgroundScheduler
+except ImportError:
+    BackgroundScheduler = None
+
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
@@ -63,22 +67,25 @@ async def lifespan(app: FastAPI):
     finally:
         db.close()
 
-    scheduler = BackgroundScheduler()
+    scheduler = None
+    if BackgroundScheduler is not None:
+        scheduler = BackgroundScheduler()
 
-    def nightly_cleanup():
-        print(f"[{datetime.datetime.now()}] 🧹 Đang chạy Cron Job: dọn dẹp hệ thống...")
+        def nightly_cleanup():
+            print(f"[{datetime.datetime.now()}] 🧹 Đang chạy Cron Job: dọn dẹp hệ thống...")
 
-    def weekly_report():
-        print(f"[{datetime.datetime.now()}] 📊 Đang chạy Cron Job: Tổng hợp báo cáo tuần...")
+        def weekly_report():
+            print(f"[{datetime.datetime.now()}] 📊 Đang chạy Cron Job: Tổng hợp báo cáo tuần...")
 
-    scheduler.add_job(nightly_cleanup, "cron", hour=2, minute=0)
-    scheduler.add_job(weekly_report, "cron", day_of_week="sun", hour=23, minute=0)
-    scheduler.start()
+        scheduler.add_job(nightly_cleanup, "cron", hour=2, minute=0)
+        scheduler.add_job(weekly_report, "cron", day_of_week="sun", hour=23, minute=0)
+        scheduler.start()
 
     yield
 
     print("👋 Đang tắt Nyvora Adaptive Learning Platform...")
-    scheduler.shutdown()
+    if scheduler is not None:
+        scheduler.shutdown()
 
 
 app = FastAPI(

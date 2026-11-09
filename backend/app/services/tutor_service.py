@@ -12,9 +12,14 @@ Tích hợp Sliding Window Context (10 lượt gần nhất) và Rule-based Peda
 from dataclasses import dataclass
 import platform
 import sys
+from typing import Any
 
-from google import genai
-from google.genai import types
+try:
+    from google import genai
+    from google.genai import types
+except ImportError:
+    genai = None  # type: ignore[assignment]
+    types = None  # type: ignore[assignment]
 
 from app.core.config import GEMINI_API_KEY, GEMINI_MODEL
 
@@ -39,9 +44,9 @@ class SocraticTutorService:
         self.api_key = api_key.strip() if api_key else ""
         self.model_name = model_name or "gemini-2.5-flash"
         self.python_version = platform.python_version()
-        self._client: genai.Client | None = None
+        self._client: Any = None
 
-        if self.api_key:
+        if self.api_key and genai is not None:
             try:
                 if self.api_key.startswith("AQ."):
                     self._client = genai.Client(vertexai=True, api_key=self.api_key)
@@ -130,8 +135,8 @@ class SocraticTutorService:
 
         window_turns = (history or [])[-self.SLIDING_WINDOW_SIZE:]
 
-        if self._client is not None:
-            contents: list[types.Content] = []
+        if self._client is not None and types is not None:
+            contents: list[Any] = []
             for turn in window_turns:
                 turn_text = (turn.get("message") or "").strip()
                 if not turn_text:

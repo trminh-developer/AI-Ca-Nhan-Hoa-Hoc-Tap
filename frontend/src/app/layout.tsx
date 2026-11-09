@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import { Inter, Bricolage_Grotesque, JetBrains_Mono } from "next/font/google";
-import "katex/dist/katex.min.css";
 import "@/app/globals.css";
 import { AuthProvider } from "@/context/AuthContext";
 import Chatbot from "@/components/chat/Chatbot";
@@ -36,6 +35,13 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="vi">
+      <head>
+        <link
+          rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/katex@0.16.21/dist/katex.min.css"
+          crossOrigin="anonymous"
+        />
+      </head>
       <body
         className={`${inter.variable} ${bricolage.variable} ${jetbrains.variable} font-sans bg-background text-foreground`}
       >

@@ -1,4 +1,28 @@
-const API_BASE = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000/api';
+function getPrimaryApiBase(): string {
+  if (process.env.NEXT_PUBLIC_API_URL) {
+    return process.env.NEXT_PUBLIC_API_URL.replace(/\/$/, '');
+  }
+  if (typeof window !== 'undefined') {
+    const host = window.location.hostname;
+    if (host === 'localhost' || host === '127.0.0.1') {
+      return 'http://localhost:8000/api';
+    }
+    return '/api';
+  }
+  return 'http://localhost:8000/api';
+}
+
+async function fetchWithFallback(endpoint: string, init: RequestInit): Promise<Response> {
+  const primaryBase = getPrimaryApiBase();
+  try {
+    return await fetch(`${primaryBase}${endpoint}`, init);
+  } catch {
+    if (primaryBase !== '/api') {
+      return await fetch(`/api${endpoint}`, init);
+    }
+    throw new Error('Không thể kết nối tới máy chủ Nyvora.');
+  }
+}
 
 let isRefreshing = false;
 let refreshPromise: Promise<string | null> | null = null;
@@ -42,7 +66,7 @@ async function tryRefreshToken(): Promise<string | null> {
   isRefreshing = true;
   refreshPromise = (async () => {
     try {
-      const res = await fetch(`${API_BASE}/auth/refresh`, {
+      const res = await fetchWithFallback('/auth/refresh', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ refresh_token: rt }),
@@ -70,7 +94,8 @@ async function tryRefreshToken(): Promise<string | null> {
 
 /**
  * Generic API request helper
- * Tự động đính kèm JWT Access Token và tự động làm mới bằng Refresh Token khi gặp 401.
+ * Tự động đính kèm JWT Access Token, tự động làm mới bằng Refresh Token khi gặp 401
+ * và tự động chuyển tiếp qua Route Handler /api khi chạy trên môi trường Serverless.
  */
 async function apiRequest<T>(
   endpoint: string,
@@ -102,20 +127,13 @@ async function apiRequest<T>(
     config.body = contentType === 'application/json' ? JSON.stringify(body) : (body as string);
   }
 
-  let response: Response;
-  try {
-    response = await fetch(`${API_BASE}${endpoint}`, config);
-  } catch {
-    throw new Error(
-      'Không thể kết nối tới máy chủ Nyvora Backend (cổng 8000). Vui lòng kiểm tra dịch vụ FastAPI đang chạy.'
-    );
-  }
+  let response: Response = await fetchWithFallback(endpoint, config);
 
   if (response.status === 401 && !skipRefresh && token) {
     const refreshedAccess = await tryRefreshToken();
     if (refreshedAccess) {
       headers['Authorization'] = `Bearer ${refreshedAccess}`;
-      response = await fetch(`${API_BASE}${endpoint}`, { method, headers, body: config.body });
+      response = await fetchWithFallback(endpoint, { method, headers, body: config.body });
     }
   }
 
@@ -161,18 +179,11 @@ export async function login(username: string, password: string): Promise<AuthTok
   formData.append('username', username.trim());
   formData.append('password', password);
 
-  let response: Response;
-  try {
-    response = await fetch(`${API_BASE}/auth/login`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-      body: formData,
-    });
-  } catch {
-    throw new Error(
-      'Không thể kết nối tới máy chủ Nyvora Backend (http://localhost:8000). Vui lòng khởi chạy Backend trước khi đăng nhập.'
-    );
-  }
+  const response = await fetchWithFallback('/auth/login', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+    body: formData.toString(),
+  });
 
   if (!response.ok) {
     const err = await response.json().catch(() => ({}));
